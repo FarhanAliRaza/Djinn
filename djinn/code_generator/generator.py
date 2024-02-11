@@ -12,7 +12,6 @@ sys.path.append("..")
 os.environ["DJANGO_SETTINGS_MODULE"] = "project.settings"
 django.setup()
 
-from django.
 read_only_models = [
     "User",
     "Group",
@@ -35,7 +34,7 @@ class Generator:
         self.app_name: str = app_name
         self.model_name: str = model_name
         self.relation_fields: list = []
-        self.read_only_fields:list = []
+        self.read_only_fields: list = []
         self.fields: list = []
         self.get_model()
         self.get_fields()
@@ -46,7 +45,7 @@ class Generator:
     def get_fields(self) -> tuple:
         return self.model._meta.fields
 
-    def get_model_name(self,model=None)->str:
+    def get_model_name(self, model=None) -> str:
         if model is None:
             return self.model._meta.label.split(".")[1]
         return model._meta.label.split(".")[1]

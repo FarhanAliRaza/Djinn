@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "djinn"
+version = "0.1.0"
+description = "A starter template for django project with super powers"
+authors = ["farhan <Www.mfarvirus@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+django = "^5.0.2"
+djangorestframework = "^3.14.0"
+django-filter = "^23.5"
+django-split-settings = "^1.2.0"
+pyyaml = "^6.0.1"
+
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.2.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

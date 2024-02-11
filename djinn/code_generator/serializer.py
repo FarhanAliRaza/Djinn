@@ -6,6 +6,8 @@ from typing import Any, List, Tuple, Dict, Optional
 import ast
 import astor
 
+from django.conf import settings
+
 
 class RewriteClassAttr(ast.NodeTransformer):
 
