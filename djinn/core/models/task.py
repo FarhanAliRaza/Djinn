@@ -1,7 +1,7 @@
 import random
 from django.db import models
 from django.contrib.auth.models import User
-from common.utils import get_filename_ext
+from djinn.common.utils.misc import get_filename_ext
 
 
 def upload_path(instance, filename):
@@ -13,22 +13,18 @@ def upload_path(instance, filename):
     )
 
 
-statuses =  (
-    ('ready', 'Ready'),
-    ('verifying', 'Verifying'),
-    ('done', 'Done'),
+statuses = (
+    ("ready", "Ready"),
+    ("verifying", "Verifying"),
+    ("done", "Done"),
 )
 
 
 class Task(models.Model):
-
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
-    status = models.CharField(max_length=100, choices=statuses, default='ready')
-    file = models.FileField(upload_to='uploads/')
+    status = models.CharField(max_length=100, choices=statuses, default="ready")
+    file = models.FileField(upload_to="uploads/")
     slug = models.SlugField(max_length=100, blank=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-
-
-

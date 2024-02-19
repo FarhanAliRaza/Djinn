@@ -1,4 +1,5 @@
 import yaml
+import os
 
 
 def yaml_coerce(value):
@@ -7,3 +8,9 @@ def yaml_coerce(value):
         return yaml.load(f"dummy: {value}", Loader=yaml.SafeLoader)["dummy"]
 
     return value
+
+
+def get_filename_ext(filepath):
+    base_name = os.path.basename(filepath)
+    name, ext = os.path.splitext(base_name)
+    return name, ext

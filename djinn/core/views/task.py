@@ -7,10 +7,8 @@ from ..serializers.task import TaskSerializer
 
 
 class TaskView(ModelViewSet):
-
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
-
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
@@ -19,9 +17,10 @@ class TaskView(ModelViewSet):
         serializer.save()
 
     def perform_destroy(self, instance):
-
         if self.request.user != instance.owner:
-            raise ValidationError("You do not have permission to delete this task", code=status.HTTP_403_FORBIDDEN)
+            raise ValidationError(
+                "You do not have permission to delete this task",
+                code=status.HTTP_403_FORBIDDEN,
+            )
 
         instance.delete()
-        

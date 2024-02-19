@@ -4,38 +4,37 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('core', '0003_initial'),
+        ("core", "0003_initial"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='task',
-            name='c_emails',
+            model_name="task",
+            name="c_emails",
         ),
         migrations.RemoveField(
-            model_name='task',
-            name='download_code',
+            model_name="task",
+            name="download_code",
         ),
         migrations.RemoveField(
-            model_name='task',
-            name='i_emails',
+            model_name="task",
+            name="i_emails",
         ),
         migrations.RemoveField(
-            model_name='task',
-            name='is_premium',
+            model_name="task",
+            name="is_premium",
         ),
         migrations.RemoveField(
-            model_name='task',
-            name='u_emails',
+            model_name="task",
+            name="u_emails",
         ),
         migrations.RemoveField(
-            model_name='task',
-            name='v_emails',
+            model_name="task",
+            name="v_emails",
         ),
         migrations.RemoveField(
-            model_name='task',
-            name='verified_emails',
+            model_name="task",
+            name="verified_emails",
         ),
     ]

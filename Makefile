@@ -19,7 +19,11 @@ migrate:
 
 .PHONY: superuser
 superuser:
-	poetry run python -m djinn.manage createsuper
+	poetry run python -m djinn.manage createsuperuser
+
+.PHONY: superuser
+generate:
+	poetry run python -m djinn.code_generator.generator
 
 
 .PHONY: check

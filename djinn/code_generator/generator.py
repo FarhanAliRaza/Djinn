@@ -1,16 +1,16 @@
 import django
 import os
 from django.apps import apps
-import sys
 from django.db import models
-from parser import Parser
-import ast
-from utils import pprintast
-from serializer import GenerateSerializer
+from .utils import pprintast
+from .serializer import GenerateSerializer
+from ..project.settings import BASE_DIR
+from pathlib import Path
+from typing import List
 
-sys.path.append("..")
-os.environ["DJANGO_SETTINGS_MODULE"] = "project.settings"
+os.environ["DJANGO_SETTINGS_MODULE"] = "djinn.project.settings"
 django.setup()
+from django.apps import apps
 
 read_only_models = [
     "User",
@@ -33,9 +33,11 @@ class Generator:
     def __init__(self, app_name, model_name):
         self.app_name: str = app_name
         self.model_name: str = model_name
-        self.relation_fields: list = []
-        self.read_only_fields: list = []
-        self.fields: list = []
+        self.app_path: Path = Path(apps.get_app_config(self.app_name).path)
+        self.relation_fields: List = []
+        self.read_only_fields: List = []
+        self.fields: List = []
+        self.str_fields: List[str] = []
         self.get_model()
         self.get_fields()
 

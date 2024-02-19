@@ -17,6 +17,8 @@ pyyaml = "^6.0.1"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.2.1"
+libcst = "^1.1.0"
+astor = "^0.8.1"
 
 [build-system]
 requires = ["poetry-core"]

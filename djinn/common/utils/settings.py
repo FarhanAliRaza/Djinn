@@ -10,9 +10,3 @@ def get_settings_from_environment(prefix):
         for key, value in os.environ.items()
         if key.startswith(prefix)
     }
-
-
-def get_filename_ext(filepath):
-    base_name = os.path.basename(filepath)
-    name, ext = os.path.splitext(base_name)
-    return name, ext

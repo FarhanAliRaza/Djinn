@@ -1,16 +1,17 @@
 from _ast import Assign, ClassDef, ImportFrom
 import libcst as cst
-from parser import Parser
-from utils import pprintast
+from .utils import pprintast
 from typing import Any, List, Tuple, Dict, Optional
 import ast
 import astor
-
-from django.conf import settings
+from pathlib import Path
+from .consts import SOURCE, GENERATED, GenType
+from .utils import get_app_file_path
+import os
+from .diff.diff import Diff
 
 
 class RewriteClassAttr(ast.NodeTransformer):
-
     def __init__(self, gen):
         self.gen = gen
 
@@ -24,7 +25,6 @@ class RewriteClassAttr(ast.NodeTransformer):
         return node
 
     def visit_Assign(self, node: Assign) -> Any:
-
         if node.targets[0].id == "model":
             newNode = ast.copy_location(self.change_model_name(node), node)
             return newNode
@@ -33,17 +33,15 @@ class RewriteClassAttr(ast.NodeTransformer):
             newNode = ast.copy_location(self.change_fields(node, self.gen.fields), node)
 
         elif node.targets[0].id == "read_only_fields":
-
             newNode = ast.copy_location(
                 self.change_fields(node, self.gen.read_only_fields), node
             )
 
-        pprintast(node)
-        print("-----------------")
+        # pprintast(node)
         return node
 
 
-class RewriteClassName(ast.NodeTransformer):
+class SerializeTransformer(ast.NodeTransformer):
     def __init__(self, gen) -> None:
         self.gen = gen
 
@@ -55,7 +53,7 @@ class RewriteClassName(ast.NodeTransformer):
 
     def visit_ImportFrom(self, node: ImportFrom) -> Any:
         print("imports")
-        pprintast(node)
+        # pprintast(node)
         if node.module == "models":
             node.names[0].name = self.gen.model_name
         return node
@@ -69,7 +67,7 @@ class RewriteClassName(ast.NodeTransformer):
 class GenerateSerializer:
     def __init__(self, gen) -> None:
         self.gen = gen
-        with open("example_serializers.py") as f:
+        with open(SOURCE / "serializers.py") as f:
             source = f.read()
         self.tree = ast.parse(source)
 
@@ -82,16 +80,38 @@ class GenerateSerializer:
                 return
         raise Exception("No ModelSerializer class found")
 
+    def get_old_file_path(self):
+        return get_app_file_path(
+            filename=self.gen.model_name.lower(),
+            app_path=self.gen.app_path,
+            type=GenType.SERIALIZER,
+        )
+
     def generate_serializer(self):
         # pprintast(self.tree)
         print("\n")
-        print("\n")
         print(self.gen.get_label())
+        print("\n")
 
-        new_tree = RewriteClassName(self.gen).visit(self.tree)
-        pprintast(new_tree)
-        with open("generated/serializers.py", "w") as f:
+        new_tree = SerializeTransformer(self.gen).visit(self.tree)
+        # pprintast(new_tree)
+        new_file_path = GENERATED / "serializers.py"
+        with open(GENERATED / "serializers.py", "w") as f:
             f.write(astor.to_source(new_tree))
+        # TODO:For now just append to the path in future we will use libsct to diff what is changed
+
+        if not os.path.exists(self.get_old_file_path()):
+            with open(self.get_old_file_path(), "a+") as f:
+                f.write(astor.to_source(new_tree))
+
+        else:
+            # file does exist diff it
+
+            d = Diff(
+                old_file_path=self.get_old_file_path(),
+                new_file_path=new_file_path,
+                gen=self.gen,
+            )
 
         # self.p.tree
 
