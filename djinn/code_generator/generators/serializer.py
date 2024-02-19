@@ -1,14 +1,14 @@
 from _ast import Assign, ClassDef, ImportFrom
 import libcst as cst
-from .utils import pprintast
+from ..utils import pprintast
 from typing import Any, List, Tuple, Dict, Optional
 import ast
 import astor
 from pathlib import Path
-from .consts import SOURCE, GENERATED, GenType
-from .utils import get_app_file_path
+from ..consts import SOURCE, GENERATED, GenType
+from ..utils import get_app_file_path
 import os
-from .diff.diff import Diff
+from ..diff.diff import Diff
 
 
 class RewriteClassAttr(ast.NodeTransformer):
@@ -71,15 +71,6 @@ class GenerateSerializer:
             source = f.read()
         self.tree = ast.parse(source)
 
-    def get_line_start_end(self):
-        for cls in self.p.classes:
-            if cls.name == "ModelSerializer":
-                print(cls.body)
-                self.line_start = cls.lineno
-                self.line_end = cls.end_lineno
-                return
-        raise Exception("No ModelSerializer class found")
-
     def get_old_file_path(self):
         return get_app_file_path(
             filename=self.gen.model_name.lower(),
@@ -112,6 +103,7 @@ class GenerateSerializer:
                 new_file_path=new_file_path,
                 gen=self.gen,
             )
+            d.serializer_diff()
 
         # self.p.tree
 

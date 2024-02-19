@@ -3,10 +3,12 @@ import os
 from django.apps import apps
 from django.db import models
 from .utils import pprintast
-from .serializer import GenerateSerializer
-from ..project.settings import BASE_DIR
 from pathlib import Path
 from typing import List
+from ..project.settings import BASE_DIR
+from .generators.serializer import GenerateSerializer
+from .generators.views import GenerateView
+from .generators.urls import GenerateUrl
 
 os.environ["DJANGO_SETTINGS_MODULE"] = "djinn.project.settings"
 django.setup()
@@ -82,8 +84,14 @@ def main():
     # app specific
     gen = Generator("core", "Task")
     gen.parse()
-    g = GenerateSerializer(gen)
-    g.generate_serializer()
+    print("SERIALIZER GENERATOR IS OFF")
+    # gs = GenerateSerializer(gen)
+    # gs.generate_serializer()
+    # gv = GenerateView(gen)
+    # gv.generate_view()
+
+    gu = GenerateUrl(gen)
+    gu.generate_urls()
 
 
 if __name__ == "__main__":

@@ -3,6 +3,7 @@ from pathlib import Path
 import os
 from ..project.settings import BASE_DIR
 from .consts import GenType
+import libcst as cst
 
 
 def pprintast(parsed_ast, indent=1):
@@ -27,6 +28,13 @@ def write_or_append_to_file(filepath, data):
     else:
         with open(filepath, "w") as f:
             f.write(data)
+
+
+# yes i know it is possible to assign multiple varaible in one statement
+# but it will complicate stuff and i did not use it in my code
+# so i am just returning the first target:default
+def get_assign_name(node: cst.Assign):
+    return node.targets[0].target.value
 
 
 def danger_print(skk):

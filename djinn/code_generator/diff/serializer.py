@@ -1,10 +1,19 @@
 from ..utils import space, danger_print
 import libcst as cst
 from libcst import BaseStatement, FlattenSentinel, RemovalSentinel, BaseElement
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, List
+from libcst.helpers import (
+    get_full_name_for_node,
+    parse_template_expression,
+    parse_template_statement,
+)
 
 if TYPE_CHECKING:
     from ..generator import Generator
+
+
+def remove_quotes(s: str):
+    return s.replace('"', "").replace("'", "")
 
 
 class ListTransformerRemove(cst.CSTTransformer):
@@ -12,14 +21,11 @@ class ListTransformerRemove(cst.CSTTransformer):
         self.gen = gen
         self.custom_fields = custom_fields
 
-    def remove_quotes(self, s: str):
-        return s.replace('"', "").replace("'", "")
-
     def leave_Element(
         self, original_node: cst.Element, updated_node: cst.Element
     ) -> BaseElement | FlattenSentinel[BaseElement] | RemovalSentinel:
 
-        s_value = self.remove_quotes(original_node.value.value)
+        s_value = remove_quotes(original_node.value.value)
         if s_value in self.gen.str_fields or s_value in self.custom_fields:
             # "fields still in model do not change"
             return updated_node
@@ -42,42 +48,77 @@ class ClassTransformer(cst.CSTTransformer):
     ]
 
     def __init__(self, gen) -> None:
-        self.gen = gen
+        self.gen: Generator = gen
 
-    def get_assign_name(self, node: cst.Assign):
+    def get_assign_name(self, node: cst.Assign) -> str:
         return node.targets[0].target.value
 
     def visit_Assign(self, node: cst.Assign) -> bool | None:
         # check if field is custom field
         # this is a hack if it is a call type it must be custom field
         if isinstance(node.value, cst.Call):
-            name = self.get_assign_name(node)
+            name = get_full_name_for_node(node)
             print(f"{name} is custom fields")
             self.custom_fields.append(name)
+
+    def init_already_present_fields(self, node: cst.List):
+        field_list = []
+        for el in node.elements:
+            field_list.append(remove_quotes(el.value.value))
+        return field_list
+
+    # creating a new list is easier then changing the list tree
+    def create_new_list_node(self, fields: List[str]) -> cst.List:
+        template = "["
+        for f in fields:
+            template += f"'{f}',"
+        template += "]"
+        return parse_template_expression(template)
+
+    def add_fields(self, node: cst.List, fields) -> cst.List:
+        already_present_fields = self.init_already_present_fields(node)
+        if not fields:
+            return node
+        for field in fields:
+            name = field.name
+            if name in already_present_fields:
+                continue
+            else:
+                already_present_fields.append(name)
+        return self.create_new_list_node(already_present_fields)
+
+    def transform_field(self, original_node: cst.Assign, fields):
+        value = original_node.value
+        if isinstance(value, cst.SimpleString):
+            # value is __all__
+            # dont do anything
+            return original_node
+
+        elif isinstance(value, cst.List):
+            # print(self.custom_fields, "custom fields")
+            # print(value, "this is the value")
+            # this will remove any field which is not in custom field or does not exist in the model
+            l = ListTransformerRemove(gen=self.gen, custom_fields=self.custom_fields)
+            modified_node = original_node.visit(l)
+            updated_value: cst.List = self.add_fields(value, fields)
+            return modified_node.with_changes(value=updated_value)
 
     def leave_Assign(self, original_node: cst.Assign, updated_node: cst.Assign):
         # print(original_node, "leave assignment")
         name = self.get_assign_name(original_node)
-        print(name, "hello")
         if name in self.defined:
             if name == "model":
                 pass
             if name == "fields":
                 print("checking fields")
-                value = original_node.value
-                if isinstance(value, cst.SimpleString):
-                    # value is __all__
-                    # dont do anything
-                    pass
+                return self.transform_field(original_node, self.gen.fields)
 
-                elif isinstance(value, cst.List):
-                    print(self.custom_fields, "custom fields")
-                    # this will remove any field which is not in custom field or does not exist in the model
-                    l = ListTransformerRemove(
-                        gen=self.gen, custom_fields=self.custom_fields
-                    )
-
-                    return original_node.visit(l)
+            elif name == "read_only_fields":
+                print("checking custom fields")
+                return self.transform_field(original_node, self.gen.read_only_fields)
+            elif name == "exclude":
+                print("checking exclude")
+                return self.transform_field(original_node, [])
 
         space()
 
