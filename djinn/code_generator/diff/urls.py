@@ -37,7 +37,7 @@ class UrlTransformer(cst.CSTTransformer):
             newbody: List[cst.SimpleStatementLine] = list(original_node.body)
             insert_at = -1
             for idx, st in enumerate(newbody):
-                print(st)
+                # print(st)
                 if isinstance(st.body[0], cst.Assign):
                     if get_assign_name(st.body[0]) == "urlpatterns":
                         insert_at = idx
@@ -53,7 +53,6 @@ class UrlDiff:
     def __init__(self, gen, old_cst) -> None:
         self.gen: Generator = gen
         self.old_cst: cst.Module = old_cst
-        print(self.old_cst)
 
     def run(self):
         reg_str = f'router.register(r"{self.gen.model_name.lower()}s", {self.gen.model_name}ViewSet,'

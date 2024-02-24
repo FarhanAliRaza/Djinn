@@ -1,4 +1,4 @@
-from ..utils import space, danger_print
+from ..utils import space, danger_print, get_assign_name
 import libcst as cst
 from libcst import BaseStatement, FlattenSentinel, RemovalSentinel, BaseElement
 from typing import TYPE_CHECKING, List
@@ -32,8 +32,7 @@ class ListTransformerRemove(cst.CSTTransformer):
         else:
             # fields is removed
             danger_print(f"Removing {s_value} field from fields in serializer")
-            return original_node.deep_remove(original_node)
-            # el.deep_remove(el)
+            return updated_node.deep_remove(updated_node)
 
 
 class ClassTransformer(cst.CSTTransformer):
@@ -50,14 +49,12 @@ class ClassTransformer(cst.CSTTransformer):
     def __init__(self, gen) -> None:
         self.gen: Generator = gen
 
-    def get_assign_name(self, node: cst.Assign) -> str:
-        return node.targets[0].target.value
-
     def visit_Assign(self, node: cst.Assign) -> bool | None:
         # check if field is custom field
+
         # this is a hack if it is a call type it must be custom field
         if isinstance(node.value, cst.Call):
-            name = get_full_name_for_node(node)
+            name = get_assign_name(node)
             print(f"{name} is custom fields")
             self.custom_fields.append(name)
 
@@ -85,6 +82,7 @@ class ClassTransformer(cst.CSTTransformer):
                 continue
             else:
                 already_present_fields.append(name)
+
         return self.create_new_list_node(already_present_fields)
 
     def transform_field(self, original_node: cst.Assign, fields):
@@ -99,13 +97,13 @@ class ClassTransformer(cst.CSTTransformer):
             # print(value, "this is the value")
             # this will remove any field which is not in custom field or does not exist in the model
             l = ListTransformerRemove(gen=self.gen, custom_fields=self.custom_fields)
-            modified_node = original_node.visit(l)
-            updated_value: cst.List = self.add_fields(value, fields)
-            return modified_node.with_changes(value=updated_value)
+            modified_list_node: cst.List = value.visit(l)
+            updated_value: cst.List = self.add_fields(modified_list_node, fields)
+            return original_node.with_changes(value=modified_list_node)
 
     def leave_Assign(self, original_node: cst.Assign, updated_node: cst.Assign):
         # print(original_node, "leave assignment")
-        name = self.get_assign_name(original_node)
+        name = get_assign_name(original_node)
         if name in self.defined:
             if name == "model":
                 pass
@@ -135,11 +133,10 @@ class SerializerTransformer(cst.CSTTransformer):
     def leave_ClassDef(
         self, original_node: cst.ClassDef, updated_node: cst.ClassDef
     ) -> BaseStatement | FlattenSentinel[BaseStatement] | RemovalSentinel:
+
         if original_node.name.value == self.serializer_class:
-            print()
-            print("-----------------------------")
-            print()
             c = ClassTransformer(self.gen)
-            modified_class = original_node.visit(c)
+            modified_class = updated_node.visit(c)
             return modified_class
+
         return original_node

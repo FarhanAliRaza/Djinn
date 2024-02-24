@@ -62,8 +62,6 @@ class ViewTransformer(cst.CSTTransformer):
         self, original_node: cst.ClassDef, updated_node: cst.ClassDef
     ) -> cst.BaseStatement | FlattenSentinel[cst.BaseStatement] | RemovalSentinel:
 
-        print(original_node, "class defination *********")
-
         if get_full_name_for_node(original_node) == "ModelViewClass":
             rca = RewriteClassAttr(self.gen)
             updated_node = original_node.visit(rca)
@@ -114,7 +112,6 @@ class GenerateView:
         print(self.gen.get_label())
         print("\n")
         vt = ViewTransformer(self.gen)
-
         modified_tree = self.tree.visit(vt)
         # pprintast(new_tree)
         new_file_path = GENERATED / "views.py"

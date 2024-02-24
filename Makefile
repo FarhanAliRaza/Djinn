@@ -5,8 +5,8 @@ install:
 	poetry install
 
 
-.PHONY: run-server
-run-server:
+.PHONY: run
+run:
 	poetry run python -m djinn.manage runserver
 
 .PHONY: migrations
@@ -24,7 +24,6 @@ superuser:
 .PHONY: superuser
 generate:
 	poetry run python -m djinn.code_generator.generator
-
 
 .PHONY: check
 check:

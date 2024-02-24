@@ -11,3 +11,8 @@ class GenType(Enum):
     VIEW = "views"
     SERIALIZER = "serializers"
     URL = "urls"
+
+
+class Template(Enum):
+
+    pass

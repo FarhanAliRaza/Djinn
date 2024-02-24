@@ -19,17 +19,6 @@ def get_app_file_path(filename: str, app_path: Path, type: str):
         return app_path / "urls.py"
 
 
-def write_or_append_to_file(filepath, data):
-
-    if os.path.exists(filepath):
-        print(f"appending to file {filepath}")
-        with open(filepath, "a") as f:
-            f.write(data)
-    else:
-        with open(filepath, "w") as f:
-            f.write(data)
-
-
 # yes i know it is possible to assign multiple varaible in one statement
 # but it will complicate stuff and i did not use it in my code
 # so i am just returning the first target:default

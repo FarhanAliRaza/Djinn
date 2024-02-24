@@ -87,10 +87,6 @@ class GenerateUrl:
             # file does exist diff it
             d = Diff(gen=self.gen, old_file_path=old_file_path)
             d.url_diff()
-        # self.p.tree
-
-        # for node in ast.walk(self.p.tree):
-        #     print(str(node))
 
 
 if __name__ == "__main__":

@@ -34,11 +34,10 @@ class Diff:
     def serializer_diff(self):
         visitor = SerializerTransformer(self.gen)
         modified_tree = self.old_cst.visit(visitor)
-        # print(modified_tree)
         self.write_to_file(modified_tree)
 
     def write_to_file(self, modified_tree):
-        with open(self.old_file_path, "w") as f:
+        with open(self.old_file_path, "w+") as f:
             danger_print(
                 f"Writing to the already present file > {self.old_file_path}",
             )

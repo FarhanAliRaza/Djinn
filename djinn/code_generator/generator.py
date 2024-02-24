@@ -84,12 +84,10 @@ def main():
     # app specific
     gen = Generator("core", "Task")
     gen.parse()
-    print("SERIALIZER GENERATOR IS OFF")
-    # gs = GenerateSerializer(gen)
-    # gs.generate_serializer()
-    # gv = GenerateView(gen)
-    # gv.generate_view()
-
+    gs = GenerateSerializer(gen)
+    gs.generate_serializer()
+    gv = GenerateView(gen)
+    gv.generate_view()
     gu = GenerateUrl(gen)
     gu.generate_urls()
 

@@ -13,6 +13,7 @@ djangorestframework = "^3.14.0"
 django-filter = "^23.5"
 django-split-settings = "^1.2.0"
 pyyaml = "^6.0.1"
+djangorestframework-simplejwt = "^5.3.1"
 
 
 [tool.poetry.group.dev.dependencies]

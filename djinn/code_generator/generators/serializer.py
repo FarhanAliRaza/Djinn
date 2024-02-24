@@ -52,8 +52,6 @@ class SerializeTransformer(ast.NodeTransformer):
         return node
 
     def visit_ImportFrom(self, node: ImportFrom) -> Any:
-        print("imports")
-        # pprintast(node)
         if node.module == "models":
             node.names[0].name = self.gen.model_name
         return node
@@ -97,18 +95,12 @@ class GenerateSerializer:
 
         else:
             # file does exist diff it
-
             d = Diff(
                 old_file_path=self.get_old_file_path(),
                 new_file_path=new_file_path,
                 gen=self.gen,
             )
             d.serializer_diff()
-
-        # self.p.tree
-
-        # for node in ast.walk(self.p.tree):
-        #     print(str(node))
 
 
 if __name__ == "__main__":
