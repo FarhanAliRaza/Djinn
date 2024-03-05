@@ -1,13 +1,11 @@
-from _ast import Assign, ClassDef, ImportFrom
 import libcst as cst
 from typing import Any, List, Tuple, Dict, Optional
 import ast
-import astor
 from pathlib import Path
-from ..consts import SOURCE, GENERATED, GenType
-from ..utils import get_app_file_path, get_assign_name
+from consts import SOURCE, GENERATED, GenType
+from utils import get_app_file_path, get_assign_name
 import os
-from ..diff.diff import Diff
+from diff.diff import Diff
 from typing import TYPE_CHECKING
 from libcst import (
     BaseSmallStatement,
@@ -23,7 +21,20 @@ from libcst.helpers import (
 )
 
 if TYPE_CHECKING:
-    from ..generator import Generator
+    from ..base import Generator
+
+
+class QuerySetTransformer(cst.CSTTransformer):
+
+    def __init__(self, model_name):
+        self.model_name = model_name
+
+    def leave_Name(
+        self, original_node: cst.Name, updated_node: cst.Name
+    ) -> cst.BaseExpression:
+        if get_full_name_for_node(original_node) == "Model":
+            return updated_node.with_changes(value=self.model_name)
+        return super().leave_Name(original_node, updated_node)
 
 
 class RewriteClassAttr(cst.CSTTransformer):
@@ -35,16 +46,22 @@ class RewriteClassAttr(cst.CSTTransformer):
     ) -> BaseSmallStatement | FlattenSentinel[BaseSmallStatement] | RemovalSentinel:
 
         name = get_assign_name(original_node)
-        if name == "queryset":
-            template = f"{self.gen.model_name}.objects.all()"
-            query_node: cst.Call = parse_template_expression(template)
-            return updated_node.with_changes(value=query_node)
-        elif name == "serializer_class":
+
+        if name == "serializer_class":
             return updated_node.with_changes(
                 value=cst.Name(value=f"{self.gen.model_name}Serializer")
             )
 
         return super().leave_Assign(original_node, updated_node)
+
+    def leave_FunctionDef(
+        self, original_node: cst.FunctionDef, updated_node: cst.FunctionDef
+    ) -> cst.BaseStatement | FlattenSentinel[cst.BaseStatement] | RemovalSentinel:
+        # print(original_node)
+        if get_full_name_for_node(original_node) == "get_queryset":
+            qt = QuerySetTransformer(self.gen.model_name)
+            return updated_node.visit(qt)
+        return super().leave_FunctionDef(original_node, updated_node)
 
 
 class ViewTransformer(cst.CSTTransformer):
@@ -108,9 +125,6 @@ class GenerateView:
 
     def generate_view(self):
         # pprintast(self.tree)
-        print("\n")
-        print(self.gen.get_label())
-        print("\n")
         vt = ViewTransformer(self.gen)
         modified_tree = self.tree.visit(vt)
         # pprintast(new_tree)

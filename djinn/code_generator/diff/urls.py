@@ -1,6 +1,5 @@
-from ..utils import space, danger_print, get_assign_name
+from utils import space, danger_print, get_assign_name
 import libcst as cst
-from libcst import BaseStatement, FlattenSentinel, RemovalSentinel, BaseElement
 from typing import TYPE_CHECKING, List
 from libcst.helpers import (
     get_full_name_for_node,
@@ -9,7 +8,7 @@ from libcst.helpers import (
 )
 
 if TYPE_CHECKING:
-    from ..generator import Generator
+    from ..base import Generator
 
 
 class UrlTransformer(cst.CSTTransformer):

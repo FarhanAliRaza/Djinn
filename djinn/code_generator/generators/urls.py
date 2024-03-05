@@ -3,10 +3,10 @@ import libcst as cst
 import ast
 import astor
 from pathlib import Path
-from ..consts import SOURCE, GENERATED, GenType
-from ..utils import get_app_file_path, get_assign_name, space
+from consts import SOURCE, GENERATED, GenType
+from utils import get_app_file_path, get_assign_name, space
 import os
-from ..diff.diff import Diff
+from diff.diff import Diff
 from typing import TYPE_CHECKING
 from libcst import (
     BaseSmallStatement,
@@ -22,7 +22,7 @@ from libcst.helpers import (
 )
 
 if TYPE_CHECKING:
-    from ..generator import Generator
+    from ..base import Generator
 
 
 class UrlTransformer(cst.CSTTransformer):
@@ -69,9 +69,6 @@ class GenerateUrl:
 
     def generate_urls(self):
         # pprintast(self.tree)
-        print("\n")
-        print(self.gen.get_label())
-        print("\n")
         vt = UrlTransformer(self.gen)
         modified_tree = self.tree.visit(vt)
         # pprintast(new_tree)

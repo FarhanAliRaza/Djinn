@@ -1,14 +1,15 @@
+import os
+
 from _ast import Assign, ClassDef, ImportFrom
 import libcst as cst
-from ..utils import pprintast
+
 from typing import Any, List, Tuple, Dict, Optional
 import ast
 import astor
 from pathlib import Path
-from ..consts import SOURCE, GENERATED, GenType
-from ..utils import get_app_file_path
-import os
-from ..diff.diff import Diff
+from consts import SOURCE, GENERATED, GenType
+from utils import get_app_file_path
+from diff.diff import Diff
 
 
 class RewriteClassAttr(ast.NodeTransformer):
@@ -78,8 +79,6 @@ class GenerateSerializer:
 
     def generate_serializer(self):
         # pprintast(self.tree)
-        print("\n")
-        print(self.gen.get_label())
         print("\n")
 
         new_tree = SerializeTransformer(self.gen).visit(self.tree)

@@ -8,9 +8,7 @@ from ..serializers.blog import BlogSerializer
 
 class BlogViewSet(ModelViewSet):
     serializer_class = BlogSerializer
-    filter_backends = [
-        DjangoFilterBackend
-    ]  # http://example.com/api/products?category=clothing&in_stock=True
+    filter_backends = [DjangoFilterBackend]  # products?category=clothing&in_stock=True
 
     def get_queryset(self):
         """

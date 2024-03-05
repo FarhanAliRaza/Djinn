@@ -4,7 +4,6 @@
 install:
 	poetry install
 
-
 .PHONY: run
 run:
 	poetry run python -m djinn.manage runserver
@@ -21,9 +20,9 @@ migrate:
 superuser:
 	poetry run python -m djinn.manage createsuperuser
 
-.PHONY: superuser
+.PHONY: generate
 generate:
-	poetry run python -m djinn.code_generator.generator
+	python djinn/code_generator/cli.py generate 
 
 .PHONY: check
 check:
@@ -32,7 +31,6 @@ check:
 .PHONY: format
 format:
 	poetry run ruff format .
-
 
 .PHONY: fix
 fix:

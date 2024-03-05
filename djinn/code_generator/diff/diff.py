@@ -1,7 +1,7 @@
 import libcst as cst
-from .serializer import SerializerTransformer
-from .urls import UrlDiff
-from ..utils import danger_print
+from diff.serializer import SerializerTransformer
+from diff.urls import UrlDiff
+from utils import danger_print
 
 
 class Diff:

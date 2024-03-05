@@ -1,7 +1,7 @@
 from rest_framework.routers import DefaultRouter
-from .views.task import TaskViewSet
+from .views.blog import BlogViewSet
 
 
 router = DefaultRouter()
-router.register(r"tasks", TaskViewSet, "task_view")
+router.register(r"blogs", BlogViewSet, "blog_view")
 urlpatterns = router.urls

@@ -1,8 +1,7 @@
+import os
 import ast
 from pathlib import Path
-import os
-from ..project.settings import BASE_DIR
-from .consts import GenType
+from consts import GenType
 import libcst as cst
 
 

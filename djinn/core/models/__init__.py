@@ -1,1 +1,1 @@
-from .task import *
+from .blog import *
