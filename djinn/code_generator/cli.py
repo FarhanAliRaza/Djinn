@@ -2,7 +2,8 @@ import typer
 from typing_extensions import Annotated
 from typing import Optional
 from base import Generator
-from generators import GenerateView, GenerateSerializer, GenerateUrl
+from generators import GenerateView, GenerateSerializer, GenerateUrl, AppGenerator
+from rich import print
 
 app = typer.Typer()
 
@@ -11,14 +12,13 @@ def parse_model_label(label: str):
     try:
         app_name = label.split(".")[0]
         model_name = label.split(".")[1]
-
         return app_name, model_name
     except:
         raise Exception("Model name should be like this [ app_name.Model_Name ]")
 
 
 @app.command()
-def create(
+def generate(
     model: Annotated[str, typer.Argument(help="app_name.Model (Model label)")],
 ):
     app_name, model_name = parse_model_label(model)
@@ -34,10 +34,25 @@ def create(
 
 
 @app.command()
-def startapp(
-    app_name: Annotated[str, typer.Argument(help="App name")],
+def create(
+    model: Annotated[str, typer.Argument(help="app_name.Model (Model label)")],
 ):
     pass
+
+
+@app.command()
+def startapp(
+    app_name: Annotated[str, typer.Argument(help="App name. A valid django app name")],
+):
+    ap = AppGenerator(app_name)
+    if ap.check_if_foldername_exists():
+        print(
+            f"[bold red]'{app_name}' conflicts with already present folder[/bold red]"
+        )
+        return
+    ap.copy_to_temp()
+    ap.transform_and_move()
+    ap.add_to_setting()
 
 
 if __name__ == "__main__":
