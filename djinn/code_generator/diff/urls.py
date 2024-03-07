@@ -61,10 +61,11 @@ class UrlDiff:
         add_register = False
         if not import_str in self.old_cst.code:
             modifed = True
-            add_import = True
+            ut = UrlTransformer(self.gen, add_import=True, add_register=False)
+            self.old_cst = self.old_cst.visit(ut)
         if not reg_str in self.old_cst.code:
             modifed = True
-            add_register = True
-        ut = UrlTransformer(self.gen, add_import=add_import, add_register=add_register)
-        modified_tree = self.old_cst.visit(ut)
-        return modifed, modified_tree
+            ut = UrlTransformer(self.gen, add_import=False, add_register=True)
+            self.old_cst = self.old_cst.visit(ut)
+
+        return modifed, self.old_cst

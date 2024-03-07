@@ -1,6 +1,6 @@
 # Djinn - Django ultimate starter template for building apis with DRF
 
-# With Code Generation built it
+## With Code Generation built it
 
 ## Work in progress
 

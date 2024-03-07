@@ -30,6 +30,4 @@ def danger_print(skk):
 
 
 def space():
-    print()
-    print("--------------------------")
-    print()
+    pass

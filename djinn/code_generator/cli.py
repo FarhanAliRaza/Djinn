@@ -1,8 +1,15 @@
+import sys
 import typer
 from typing_extensions import Annotated
-from typing import Optional
+from typing import List
 from base import Generator
-from generators import GenerateView, GenerateSerializer, GenerateUrl, AppGenerator
+from generators import (
+    GenerateView,
+    GenerateSerializer,
+    GenerateUrl,
+    AppGenerator,
+    ModelGenerator,
+)
 from rich import print
 
 app = typer.Typer()
@@ -10,11 +17,13 @@ app = typer.Typer()
 
 def parse_model_label(label: str):
     try:
-        app_name = label.split(".")[0]
-        model_name = label.split(".")[1]
+        app_name, model_name = label.split(".")
         return app_name, model_name
-    except:
-        raise Exception("Model name should be like this [ app_name.Model_Name ]")
+    except Exception as e:
+        print(
+            f"[bold red]'{label}' is not valid label. Valid name is[/bold red][bold green] app_name.ModelName [/bold green]"
+        )
+        sys.exit()
 
 
 @app.command()
@@ -36,8 +45,20 @@ def generate(
 @app.command()
 def create(
     model: Annotated[str, typer.Argument(help="app_name.Model (Model label)")],
+    fields: Annotated[List[str], typer.Argument(help="field_name:field_type")],
 ):
-    pass
+    """
+    model:[app.Model] Model name must include the app name so model code is inserted into that apps model files
+    fields: [field:type] valid types are [str, text, choices]
+
+    """
+    app_name, model_name = parse_model_label(model)
+    mg = ModelGenerator(app_name=app_name, model_name=model_name, fields=fields)
+    mg.parse_fields()
+    mg.create_model()
+    mg.copy_over_code_to_app()
+    mg.export_model()
+    mg.add_to_admin()
 
 
 @app.command()
