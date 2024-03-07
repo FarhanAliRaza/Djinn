@@ -1,4 +1,5 @@
 from datetime import timedelta
+
 from .. import settings
 
 SIMPLE_JWT = {

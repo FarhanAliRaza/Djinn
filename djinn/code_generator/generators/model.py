@@ -1,12 +1,12 @@
+import shutil
 import sys
 from pathlib import Path
-from django.db import models
+from typing import List
+
+import libcst as cst
+from consts import GENERATED, SOURCE
 from django.apps import apps
 from rich import print
-from consts import SOURCE, GENERATED
-import libcst as cst
-import shutil
-from typing import List
 
 field_map = {
     "str": "models.CharField(max_length=255)",
@@ -19,20 +19,17 @@ field_map = {
 
 
 class ChoiceTransformer(cst.CSTTransformer):
+
     def __init__(self, choice_field) -> None:
         self.choice_field = choice_field
 
     def leave_ClassDef(
         self, original_node: cst.ClassDef, updated_node: cst.ClassDef
-    ) -> (
-        cst.BaseStatement | cst.FlattenSentinel[cst.BaseStatement] | cst.RemovalSentinel
-    ):
+    ) -> (cst.BaseStatement | cst.FlattenSentinel[cst.BaseStatement] | cst.RemovalSentinel):
         name = self.choice_field["name"].capitalize()
         return updated_node.with_changes(name=cst.Name(value=f"{name}Choice"))
 
-    def leave_IndentedBlock(
-        self, original_node: cst.IndentedBlock, updated_node: cst.IndentedBlock
-    ) -> cst.BaseSuite:
+    def leave_IndentedBlock(self, original_node: cst.IndentedBlock, updated_node: cst.IndentedBlock) -> cst.BaseSuite:
         newbody = []
         for field in self.choice_field["values"]:
             fi = cst.parse_statement(f"{field} = '{field}'")
@@ -41,22 +38,18 @@ class ChoiceTransformer(cst.CSTTransformer):
 
 
 class ModelTransormer(cst.CSTTransformer):
+
     def __init__(self, model_name, fields) -> None:
         self.model_name = model_name
         self.fields = fields
         print(self.fields)
 
-    def leave_IndentedBlock(
-        self, original_node: cst.IndentedBlock, updated_node: cst.IndentedBlock
-    ) -> cst.BaseSuite:
+    def leave_IndentedBlock(self, original_node: cst.IndentedBlock, updated_node: cst.IndentedBlock) -> cst.BaseSuite:
         newbody = []
         for field in self.fields:
             if (
-                field["field_type"] == "str"
-                or field["field_type"] == "text"
-                or field["field_type"] == "int"
-                or field["field_type"] == "float"
-                or field["field_type"] == "bool"
+                field["field_type"] == "str" or field["field_type"] == "text" or field["field_type"] == "int" or
+                field["field_type"] == "float" or field["field_type"] == "bool"
             ):
                 name = field["name"]
                 dj_field = field["dj_field"]
@@ -74,26 +67,21 @@ class ModelTransormer(cst.CSTTransformer):
 
     def leave_ClassDef(
         self, original_node: cst.ClassDef, updated_node: cst.ClassDef
-    ) -> (
-        cst.BaseStatement | cst.FlattenSentinel[cst.BaseStatement] | cst.RemovalSentinel
-    ):
+    ) -> (cst.BaseStatement | cst.FlattenSentinel[cst.BaseStatement] | cst.RemovalSentinel):
         # change name
 
         return updated_node.with_changes(name=cst.Name(value=f"{self.model_name}"))
 
 
 class AdminTransformer(cst.CSTTransformer):
+
     def __init__(self, model_name) -> None:
         self.model_name = model_name
 
-    def leave_Module(
-        self, original_node: cst.Module, updated_node: cst.Module
-    ) -> cst.Module:
+    def leave_Module(self, original_node: cst.Module, updated_node: cst.Module) -> cst.Module:
         old_body: List[cst.SimpleStatementLine] = list(updated_node.body)
         statement = cst.parse_statement(f"from .models import {self.model_name}")
-        register_statement = cst.parse_statement(
-            f"admin.site.register({self.model_name})"
-        )
+        register_statement = cst.parse_statement(f"admin.site.register({self.model_name})")
 
         old_body.insert(0, statement)
         old_body.append(register_statement)
@@ -101,12 +89,11 @@ class AdminTransformer(cst.CSTTransformer):
 
 
 class InitTransformer(cst.CSTTransformer):
+
     def __init__(self, model_name) -> None:
         self.model_name = model_name
 
-    def leave_Module(
-        self, original_node: cst.Module, updated_node: cst.Module
-    ) -> cst.Module:
+    def leave_Module(self, original_node: cst.Module, updated_node: cst.Module) -> cst.Module:
         old_body: List[cst.SimpleStatementLine] = list(updated_node.body)
         statement = cst.parse_statement(f"from .{self.model_name.lower()} import *")
 
@@ -115,6 +102,7 @@ class InitTransformer(cst.CSTTransformer):
 
 
 class ModelGenerator:
+
     def __init__(self, app_name, model_name, fields) -> None:
         self.app_name = app_name
         self.model_name = model_name

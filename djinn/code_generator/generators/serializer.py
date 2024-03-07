@@ -1,18 +1,16 @@
-import os
-
-from _ast import Assign, ClassDef, ImportFrom
-import libcst as cst
-
-from typing import Any, List, Tuple, Dict, Optional
 import ast
+import os
+from _ast import Assign, ClassDef, ImportFrom
+from typing import Any
+
 import astor
-from pathlib import Path
-from consts import SOURCE, GENERATED, GenType
-from utils import get_app_file_path
+from consts import GENERATED, SOURCE, GenType
 from diff.diff import Diff
+from utils import get_app_file_path
 
 
 class RewriteClassAttr(ast.NodeTransformer):
+
     def __init__(self, gen):
         self.gen = gen
 
@@ -34,15 +32,14 @@ class RewriteClassAttr(ast.NodeTransformer):
             newNode = ast.copy_location(self.change_fields(node, self.gen.fields), node)
 
         elif node.targets[0].id == "read_only_fields":
-            newNode = ast.copy_location(
-                self.change_fields(node, self.gen.read_only_fields), node
-            )
+            newNode = ast.copy_location(self.change_fields(node, self.gen.read_only_fields), node)
 
         # pprintast(node)
         return node
 
 
 class SerializeTransformer(ast.NodeTransformer):
+
     def __init__(self, gen) -> None:
         self.gen = gen
 
@@ -64,6 +61,7 @@ class SerializeTransformer(ast.NodeTransformer):
 
 
 class GenerateSerializer:
+
     def __init__(self, gen) -> None:
         self.gen = gen
         with open(SOURCE / "serializers.py") as f:

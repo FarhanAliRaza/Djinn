@@ -9,5 +9,4 @@ def deep_update(base_dict, update_with):
                 base_dict[key] = value
         else:
             base_dict[key] = value
-
     return base_dict

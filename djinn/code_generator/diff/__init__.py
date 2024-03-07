@@ -1,1 +1,1 @@
-from diff.diff import Diff
+from diff.diff import Diff  # noqa

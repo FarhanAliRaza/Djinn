@@ -26,7 +26,5 @@ class Migration(migrations.Migration):
                 max_length=255,
             ),
         ),
-        migrations.DeleteModel(
-            name="Category",
-        ),
+        migrations.DeleteModel(name="Category",),
     ]

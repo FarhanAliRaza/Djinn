@@ -20,6 +20,15 @@ migrate:
 superuser:
 	poetry run python -m djinn.manage createsuperuser
 
+.PHONY: install-pre-commit
+install-pre-commit:
+	poetry run pre-commit uninstall; poetry run pre-commit install
+
+.PHONY: lint
+lint:
+	poetry run pre-commit run --all-files
+
+
 .PHONY: generate
 generate:
 	python djinn/code_generator/cli.py generate 

@@ -1,16 +1,13 @@
-from rest_framework.viewsets import ModelViewSet
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import status
-from rest_framework.exceptions import ValidationError
+from rest_framework.viewsets import ModelViewSet
+
 from ..models import Model
 from ..serializers.model import ModelSerializer
 
 
 class ModelViewClass(ModelViewSet):
     serializer_class = ModelSerializer
-    filter_backends = [
-        DjangoFilterBackend
-    ]  # http://example.com/api/products?category=clothing&in_stock=True
+    filter_backends = [DjangoFilterBackend]  # http://example.com/api/products?category=clothing&in_stock=True
 
     def get_queryset(self):
         """

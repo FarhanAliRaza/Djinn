@@ -1,5 +1,5 @@
-from generators.serializer import GenerateSerializer
-from generators.urls import GenerateUrl
-from generators.views import GenerateView
-from generators.app import AppGenerator
-from generators.model import ModelGenerator
+from generators.app import AppGenerator  # noqa
+from generators.model import ModelGenerator  # noqa
+from generators.serializer import GenerateSerializer  # noqa
+from generators.urls import GenerateUrl  # noqa
+from generators.views import GenerateView  # noqa

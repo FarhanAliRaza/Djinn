@@ -1,7 +1,7 @@
-from .models import Blog
 from django.contrib import admin
 
-admin.site.register(Blog)
+from .models import Blog
 
+admin.site.register(Blog)
 
 # Register your models here.

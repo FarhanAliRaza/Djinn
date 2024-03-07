@@ -1,25 +1,21 @@
-from utils import space, danger_print, get_assign_name
-import libcst as cst
 from typing import TYPE_CHECKING, List
-from libcst.helpers import (
-    get_full_name_for_node,
-    parse_template_expression,
-    parse_template_statement,
-)
+
+import libcst as cst
+from libcst.helpers import parse_template_statement
+from utils import get_assign_name
 
 if TYPE_CHECKING:
     from ..base import Generator
 
 
 class UrlTransformer(cst.CSTTransformer):
+
     def __init__(self, gen, add_register=False, add_import=False) -> None:
         self.gen: Generator = gen
         self.add_import = add_import
         self.add_register = add_register
 
-    def leave_Module(
-        self, original_node: cst.Module, updated_node: cst.Module
-    ) -> cst.Module:
+    def leave_Module(self, original_node: cst.Module, updated_node: cst.Module) -> cst.Module:
         # add import atthe top of the file sorting will be sorted by formatter
         if self.add_import:
             node = parse_template_statement(
@@ -45,6 +41,7 @@ class UrlTransformer(cst.CSTTransformer):
 
 
 class UrlDiff:
+
     def __init__(self, gen, old_cst) -> None:
         self.gen: Generator = gen
         self.old_cst: cst.Module = old_cst
@@ -55,11 +52,11 @@ class UrlDiff:
         modifed = False
         add_import = False
         add_register = False
-        if not import_str in self.old_cst.code:
+        if import_str not in self.old_cst.code:
             modifed = True
             ut = UrlTransformer(self.gen, add_import=True, add_register=False)
             self.old_cst = self.old_cst.visit(ut)
-        if not reg_str in self.old_cst.code:
+        if reg_str not in self.old_cst.code:
             modifed = True
             ut = UrlTransformer(self.gen, add_import=False, add_register=True)
             self.old_cst = self.old_cst.visit(ut)

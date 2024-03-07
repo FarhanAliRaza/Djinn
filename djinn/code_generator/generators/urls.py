@@ -1,31 +1,19 @@
-from _ast import Assign, ClassDef, ImportFrom
-import libcst as cst
-import ast
-import astor
-from pathlib import Path
-from consts import SOURCE, GENERATED, GenType
-from utils import get_app_file_path, get_assign_name, space
 import os
-from diff.diff import Diff
 from typing import TYPE_CHECKING
-from libcst import (
-    BaseSmallStatement,
-    FlattenSentinel,
-    BaseSmallStatement,
-    RemovalSentinel,
-)
-from libcst.helpers import (
-    get_full_name_for_node,
-    parse_template_expression,
-    parse_template_module,
-    parse_template_statement,
-)
+
+import libcst as cst
+from consts import GENERATED, SOURCE, GenType
+from diff.diff import Diff
+from libcst import BaseSmallStatement, FlattenSentinel, RemovalSentinel
+from libcst.helpers import get_full_name_for_node, parse_template_expression, parse_template_statement
+from utils import get_app_file_path
 
 if TYPE_CHECKING:
     from ..base import Generator
 
 
 class UrlTransformer(cst.CSTTransformer):
+
     def __init__(self, gen) -> None:
         self.gen: Generator = gen
 
@@ -40,9 +28,7 @@ class UrlTransformer(cst.CSTTransformer):
                 return node.body[0]
         return super().leave_ImportFrom(original_node, updated_node)
 
-    def leave_Call(
-        self, original_node: cst.Call, updated_node: cst.Call
-    ) -> cst.BaseExpression:
+    def leave_Call(self, original_node: cst.Call, updated_node: cst.Call) -> cst.BaseExpression:
         if get_full_name_for_node(original_node) == "router.register":
             # ok now change then names
             template = f'router.register(r"{self.gen.model_name.lower()}s", {self.gen.model_name}ViewSet, "{self.gen.model_name.lower()}_view")'
@@ -52,6 +38,7 @@ class UrlTransformer(cst.CSTTransformer):
 
 
 class GenerateUrl:
+
     def __init__(self, gen) -> None:
         self.gen: Generator = gen
         with open(SOURCE / "urls.py") as f:

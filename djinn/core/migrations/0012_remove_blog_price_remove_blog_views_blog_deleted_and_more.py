@@ -20,9 +20,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="blog",
             name="deleted",
-            field=models.CharField(
-                choices=[("no", "No"), ("yes", "Yes")], default="no", max_length=100
-            ),
+            field=models.CharField(choices=[("no", "No"), ("yes", "Yes")], default="no", max_length=100),
         ),
         migrations.AlterField(
             model_name="blog",

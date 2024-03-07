@@ -1,14 +1,13 @@
-import django
 import os
-from django.apps import apps
-from django.db import models
 from pathlib import Path
 from typing import List
 
+import django
+from django.apps import apps
+from django.db import models
 
 os.environ["DJANGO_SETTINGS_MODULE"] = "djinn.project.settings"
 django.setup()
-from django.apps import apps
 
 read_only_models = [
     "User",
@@ -28,6 +27,7 @@ REALATION_FIELDS_CLASSES = (
 
 
 class Generator:
+
     def __init__(self, app_name, model_name):
         self.app_name: str = app_name
         self.model_name: str = model_name

@@ -5,6 +5,7 @@ from utils import danger_print
 
 
 class Diff:
+
     def __init__(
         self,
         gen,
@@ -36,9 +37,7 @@ class Diff:
 
     def write_to_file(self, modified_tree):
         with open(self.old_file_path, "w+") as f:
-            danger_print(
-                f"Writing to the already present file > {self.old_file_path}",
-            )
+            danger_print(f"Writing to the already present file > {self.old_file_path}",)
             f.write(modified_tree.code)
             print("writting done")
 

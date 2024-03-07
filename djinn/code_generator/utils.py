@@ -1,8 +1,8 @@
-import os
 import ast
 from pathlib import Path
-from consts import GenType
+
 import libcst as cst
+from consts import GenType
 
 
 def pprintast(parsed_ast, indent=1):
