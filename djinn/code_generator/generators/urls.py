@@ -32,7 +32,6 @@ class UrlTransformer(cst.CSTTransformer):
     def leave_ImportFrom(
         self, original_node: cst.ImportFrom, updated_node: cst.ImportFrom
     ) -> BaseSmallStatement | FlattenSentinel[BaseSmallStatement] | RemovalSentinel:
-
         if isinstance(updated_node.module.value, cst.Name):
             name = get_full_name_for_node(updated_node.module.value)
             if name == "views":
@@ -44,7 +43,6 @@ class UrlTransformer(cst.CSTTransformer):
     def leave_Call(
         self, original_node: cst.Call, updated_node: cst.Call
     ) -> cst.BaseExpression:
-
         if get_full_name_for_node(original_node) == "router.register":
             # ok now change then names
             template = f'router.register(r"{self.gen.model_name.lower()}s", {self.gen.model_name}ViewSet, "{self.gen.model_name.lower()}_view")'

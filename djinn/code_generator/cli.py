@@ -50,10 +50,15 @@ def create(
     """
     model:[app.Model] Model name must include the app name so model code is inserted into that apps model files
     fields: [field:type] valid types are [str, text, choices]
-
     """
+
     app_name, model_name = parse_model_label(model)
     mg = ModelGenerator(app_name=app_name, model_name=model_name, fields=fields)
+    if mg.check_if_file_exists():
+        print(
+            f"[bold red]'{model_name}' conflicts with already present {model_name.lower()}.py already exists[/bold red]"
+        )
+        return
     mg.parse_fields()
     mg.create_model()
     mg.copy_over_code_to_app()
@@ -91,12 +96,6 @@ generate app.Model --serializer
 generate app.Model --v
 
 generate app.Model --u
-
-
-
-
-
-
 
 
 """

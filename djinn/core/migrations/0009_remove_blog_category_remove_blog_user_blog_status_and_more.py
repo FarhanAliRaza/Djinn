@@ -4,26 +4,29 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('core', '0008_blog_category'),
+        ("core", "0008_blog_category"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='blog',
-            name='category',
+            model_name="blog",
+            name="category",
         ),
         migrations.RemoveField(
-            model_name='blog',
-            name='user',
+            model_name="blog",
+            name="user",
         ),
         migrations.AddField(
-            model_name='blog',
-            name='status',
-            field=models.CharField(choices=[('draft', 'Draft'), ('published', 'Published')], default='draft', max_length=255),
+            model_name="blog",
+            name="status",
+            field=models.CharField(
+                choices=[("draft", "Draft"), ("published", "Published")],
+                default="draft",
+                max_length=255,
+            ),
         ),
         migrations.DeleteModel(
-            name='Category',
+            name="Category",
         ),
     ]

@@ -20,5 +20,4 @@ class GenType(Enum):
 
 
 class Template(Enum):
-
     pass

@@ -12,7 +12,6 @@ if TYPE_CHECKING:
 
 
 class UrlTransformer(cst.CSTTransformer):
-
     def __init__(self, gen, add_register=False, add_import=False) -> None:
         self.gen: Generator = gen
         self.add_import = add_import
@@ -21,7 +20,6 @@ class UrlTransformer(cst.CSTTransformer):
     def leave_Module(
         self, original_node: cst.Module, updated_node: cst.Module
     ) -> cst.Module:
-
         # add import atthe top of the file sorting will be sorted by formatter
         if self.add_import:
             node = parse_template_statement(
@@ -41,14 +39,12 @@ class UrlTransformer(cst.CSTTransformer):
                     if get_assign_name(st.body[0]) == "urlpatterns":
                         insert_at = idx
                         break
-                space()
             newbody.insert(insert_at, node)
             return updated_node.with_changes(body=tuple(newbody))
         return original_node
 
 
 class UrlDiff:
-
     def __init__(self, gen, old_cst) -> None:
         self.gen: Generator = gen
         self.old_cst: cst.Module = old_cst

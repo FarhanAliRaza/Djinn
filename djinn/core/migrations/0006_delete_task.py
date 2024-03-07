@@ -4,13 +4,12 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('core', '0005_remove_task_file_remove_task_status'),
+        ("core", "0005_remove_task_file_remove_task_status"),
     ]
 
     operations = [
         migrations.DeleteModel(
-            name='Task',
+            name="Task",
         ),
     ]

@@ -47,7 +47,6 @@ class TransformSettings(cst.CSTTransformer):
     ):
         # comma=MaybeSentinel.DEFAULT,
         if get_assign_name(updated_node) in ["INSTALLED_APPS"]:
-
             # check if last element is comma or not and add the label to it
             elements: List[cst.Element] = updated_node.value.elements
             last_element: cst.Element = elements[-1]
@@ -71,7 +70,6 @@ class TransformSettings(cst.CSTTransformer):
 
 
 class AppGenerator:
-
     def __init__(self, app_name) -> None:
         self.app_name = app_name
         self.app_label = f"{PARENT_PACKAGE}.{self.app_name}"
@@ -79,7 +77,6 @@ class AppGenerator:
         self.new_app_folder = SOURCE / app_name
 
     def delete_if_folder_exists(self):
-
         if self.new_app_folder.exists():
             print("folder exist.Deleting....")
             shutil.rmtree(self.new_app_folder)

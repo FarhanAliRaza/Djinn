@@ -5,14 +5,12 @@ from utils import danger_print
 
 
 class Diff:
-
     def __init__(
         self,
         gen,
         old_file_path,
         new_file_path=None,
     ) -> None:
-
         self.old_file_path = old_file_path
         self.new_file_path = new_file_path
         self.gen = gen

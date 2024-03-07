@@ -24,7 +24,6 @@ class ListTransformerRemove(cst.CSTTransformer):
     def leave_Element(
         self, original_node: cst.Element, updated_node: cst.Element
     ) -> BaseElement | FlattenSentinel[BaseElement] | RemovalSentinel:
-
         s_value = remove_quotes(original_node.value.value)
         if s_value in self.gen.str_fields or s_value in self.custom_fields:
             # "fields still in model do not change"
@@ -36,7 +35,6 @@ class ListTransformerRemove(cst.CSTTransformer):
 
 
 class ClassTransformer(cst.CSTTransformer):
-
     custom_fields = []
     defined = [
         "model",
@@ -108,35 +106,24 @@ class ClassTransformer(cst.CSTTransformer):
             if name == "model":
                 pass
             if name == "fields":
-                print("checking fields")
                 return self.transform_field(original_node, self.gen.fields)
-
             elif name == "read_only_fields":
-                print("checking custom fields")
                 return self.transform_field(original_node, self.gen.read_only_fields)
             elif name == "exclude":
-                print("checking exclude")
                 return self.transform_field(original_node, [])
-
-        space()
-
         return updated_node
 
 
 class SerializerTransformer(cst.CSTTransformer):
-
     def __init__(self, gen) -> None:
         self.gen: Generator = gen
-
         self.serializer_class = f"{self.gen.model_name}Serializer"
 
     def leave_ClassDef(
         self, original_node: cst.ClassDef, updated_node: cst.ClassDef
     ) -> BaseStatement | FlattenSentinel[BaseStatement] | RemovalSentinel:
-
         if original_node.name.value == self.serializer_class:
             c = ClassTransformer(self.gen)
             modified_class = updated_node.visit(c)
             return modified_class
-
         return original_node

@@ -4,28 +4,33 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('core', '0011_blog_price'),
+        ("core", "0011_blog_price"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='blog',
-            name='price',
+            model_name="blog",
+            name="price",
         ),
         migrations.RemoveField(
-            model_name='blog',
-            name='views',
+            model_name="blog",
+            name="views",
         ),
         migrations.AddField(
-            model_name='blog',
-            name='deleted',
-            field=models.CharField(choices=[('no', 'No'), ('yes', 'Yes')], default='no', max_length=100),
+            model_name="blog",
+            name="deleted",
+            field=models.CharField(
+                choices=[("no", "No"), ("yes", "Yes")], default="no", max_length=100
+            ),
         ),
         migrations.AlterField(
-            model_name='blog',
-            name='status',
-            field=models.CharField(choices=[('published', 'Published'), ('draft', 'Draft')], default='published', max_length=100),
+            model_name="blog",
+            name="status",
+            field=models.CharField(
+                choices=[("published", "Published"), ("draft", "Draft")],
+                default="published",
+                max_length=100,
+            ),
         ),
     ]

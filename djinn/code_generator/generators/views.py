@@ -25,7 +25,6 @@ if TYPE_CHECKING:
 
 
 class QuerySetTransformer(cst.CSTTransformer):
-
     def __init__(self, model_name):
         self.model_name = model_name
 
@@ -44,7 +43,6 @@ class RewriteClassAttr(cst.CSTTransformer):
     def leave_Assign(
         self, original_node: cst.Assign, updated_node: cst.Assign
     ) -> BaseSmallStatement | FlattenSentinel[BaseSmallStatement] | RemovalSentinel:
-
         name = get_assign_name(original_node)
 
         if name == "serializer_class":
@@ -78,7 +76,6 @@ class ViewTransformer(cst.CSTTransformer):
     def leave_ClassDef(
         self, original_node: cst.ClassDef, updated_node: cst.ClassDef
     ) -> cst.BaseStatement | FlattenSentinel[cst.BaseStatement] | RemovalSentinel:
-
         if get_full_name_for_node(original_node) == "ModelViewClass":
             rca = RewriteClassAttr(self.gen)
             updated_node = original_node.visit(rca)
@@ -89,7 +86,6 @@ class ViewTransformer(cst.CSTTransformer):
     def leave_ImportFrom(
         self, original_node: cst.ImportFrom, updated_node: cst.ImportFrom
     ) -> BaseSmallStatement | FlattenSentinel[BaseSmallStatement] | RemovalSentinel:
-
         if updated_node.module.value == "models":
             return updated_node.with_deep_changes(
                 updated_node,

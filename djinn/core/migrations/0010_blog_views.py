@@ -4,15 +4,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('core', '0009_remove_blog_category_remove_blog_user_blog_status_and_more'),
+        ("core", "0009_remove_blog_category_remove_blog_user_blog_status_and_more"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='blog',
-            name='views',
+            model_name="blog",
+            name="views",
             field=models.IntegerField(default=0),
         ),
     ]

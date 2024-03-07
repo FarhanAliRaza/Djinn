@@ -79,8 +79,6 @@ class GenerateSerializer:
 
     def generate_serializer(self):
         # pprintast(self.tree)
-        print("\n")
-
         new_tree = SerializeTransformer(self.gen).visit(self.tree)
         # pprintast(new_tree)
         new_file_path = GENERATED / "serializers.py"

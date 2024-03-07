@@ -1,4 +1,3 @@
-
 from rest_framework.permissions import AllowAny
 
 REST_FRAMEWORK = {

@@ -60,11 +60,5 @@ class Generator:
                 self.fields.append(field)
 
 
-def main():
-    print("Hello World")
-    # app specific
-
-
 if __name__ == "__main__":
-
     pass

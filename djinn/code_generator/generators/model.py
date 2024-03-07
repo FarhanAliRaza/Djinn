@@ -19,7 +19,6 @@ field_map = {
 
 
 class ChoiceTransformer(cst.CSTTransformer):
-
     def __init__(self, choice_field) -> None:
         self.choice_field = choice_field
 
@@ -42,7 +41,6 @@ class ChoiceTransformer(cst.CSTTransformer):
 
 
 class ModelTransormer(cst.CSTTransformer):
-
     def __init__(self, model_name, fields) -> None:
         self.model_name = model_name
         self.fields = fields
@@ -79,14 +77,12 @@ class ModelTransormer(cst.CSTTransformer):
     ) -> (
         cst.BaseStatement | cst.FlattenSentinel[cst.BaseStatement] | cst.RemovalSentinel
     ):
-
         # change name
 
         return updated_node.with_changes(name=cst.Name(value=f"{self.model_name}"))
 
 
 class AdminTransformer(cst.CSTTransformer):
-
     def __init__(self, model_name) -> None:
         self.model_name = model_name
 
@@ -105,7 +101,6 @@ class AdminTransformer(cst.CSTTransformer):
 
 
 class InitTransformer(cst.CSTTransformer):
-
     def __init__(self, model_name) -> None:
         self.model_name = model_name
 
@@ -120,7 +115,6 @@ class InitTransformer(cst.CSTTransformer):
 
 
 class ModelGenerator:
-
     def __init__(self, app_name, model_name, fields) -> None:
         self.app_name = app_name
         self.model_name = model_name
@@ -131,7 +125,6 @@ class ModelGenerator:
     def parse_field(self, field):
         # field should be name:type
         try:
-
             name, field_type = field.split(":")
             values = None
             if "," in field_type:
@@ -157,12 +150,10 @@ class ModelGenerator:
             sys.exit()
 
     def parse_fields(self):
-
         for field in self.fields:
             self.cleaned_fields.append(self.parse_field(field))
 
     def create_model(self):
-
         with open(GENERATED / "models.py", "w") as f:
             f.write("from django.db import models\n\n")
         for field in self.cleaned_fields:
@@ -211,3 +202,7 @@ class ModelGenerator:
         updated_tree = tree.visit(at)
         with open(file_path, mode="w") as f:
             source = f.write(updated_tree.code)
+
+    def check_if_file_exists(self):
+        file_path = self.app_path / "models" / f"{self.model_name.lower()}.py"
+        return file_path.exists()
