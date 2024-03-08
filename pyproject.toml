@@ -14,6 +14,8 @@ django-filter = "^23.5"
 django-split-settings = "^1.2.0"
 pyyaml = "^6.0.1"
 djangorestframework-simplejwt = "^5.3.1"
+psycopg2 = "^2.9.9"
+daphne = "^4.1.0"
 
 
 [tool.poetry.group.dev.dependencies]
@@ -22,6 +24,7 @@ libcst = "^1.1.0"
 astor = "^0.8.1"
 typer = {extras = ["all"], version = "^0.9.0"}
 pre-commit = "^3.6.2"
+colorlog = "^6.8.2"
 
 [tool.isort]
 line_length = 119

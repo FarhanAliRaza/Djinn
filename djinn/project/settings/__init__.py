@@ -19,6 +19,7 @@ if not os.path.isabs(LOCAL_SETTINGS_PATH):
 include(
     "base.py",
     "custom.py",
+    "logging.py",
     "drf.py",
     "jwt.py",
     optional(LOCAL_SETTINGS_PATH),

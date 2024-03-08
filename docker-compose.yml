@@ -1,0 +1,58 @@
+version: '3.9'
+
+services:
+
+  db:
+    image: postgres:16.2-alpine
+    restart: unless-stopped
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_DB: djinn
+      POSTGRES_USER: djinn
+      POSTGRES_PASSWORD: djinn
+    volumes:
+      - postgresql-data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7.2.4-alpine
+    restart: unless-stopped
+    ports:
+      - '6379:6379'
+    volumes:
+      - redis-data:/var/lib/redis
+
+  app:
+    build: .
+    restart: unless-stopped
+    ports:
+      - '8000:8000'
+    depends_on:
+      - db
+      - redis
+    environment:
+      DJINN_SETTING_DATABASES: '{"default":{"HOST":"db"}}'
+      DJINN_SETTING_LOCAL_SETTINGS_PATH: local/settings.prod.py
+      DJINN_SETTING_CHANNEL_LAYERS: '{"default":{"CONFIG":{"hosts":[["redis", 6379]]}}}'
+      DJINN_SETTING_CELERY_RESULT_BACKEND: redis://redis:6379/0
+      DJINN_SETTING_CELERY_BROKER_URL: redis://redis:6379/0
+
+  celery:
+    build: .
+    restart: unless-stopped
+    entrypoint: ["poetry", "run", "celery", "-A", "djinn.project", "worker", "-l", "INFO"]
+    depends_on:
+      - db
+      - redis
+    environment:
+      DJINN_SETTING_DATABASES: '{"default":{"HOST":"db"}}'
+      DJINN_SETTING_LOCAL_SETTINGS_PATH: local/settings.prod.py
+      DJINN_SETTING_CHANNEL_LAYERS: '{"default":{"CONFIG":{"hosts":[["redis", 6379]]}}}'
+      DJINN_SETTING_CELERY_RESULT_BACKEND: redis://redis:6379/0
+      DJINN_SETTING_CELERY_BROKER_URL: redis://redis:6379/0
+
+volumes:
+  postgresql-data:
+    driver: local
+  redis-data:
+    driver: local

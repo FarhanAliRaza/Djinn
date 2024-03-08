@@ -45,6 +45,12 @@ format:
 fix:
 	poetry run ruff check --fix .
 
+.PHONY: run-dependencies
+run-dependencies:
+	test -f .env || touch .env
+	docker-compose -f docker-compose.dev.yml up --force-recreate db redis
+
+
 .PHONY: update
 update: install migrate ;
 	
