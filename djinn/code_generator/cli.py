@@ -1,4 +1,6 @@
+import sys
 from typing import List
+
 import typer
 from base import Generator
 from generators import (
@@ -10,9 +12,9 @@ from generators import (
 )
 from rich import print
 from typing_extensions import Annotated
-import sys
 
 app = typer.Typer()
+#
 
 
 def parse_model_label(label: str):
