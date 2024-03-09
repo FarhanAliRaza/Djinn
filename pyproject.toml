@@ -36,6 +36,7 @@ multi_line_output = 5
 
 [tool.ruff]
 extend-exclude = [".env", "djinn/code_generator/source/*.py"]
+extend-select = ["I"]
 
 [tool.yapf]
 align_closing_bracket_with_visual_indent = true
