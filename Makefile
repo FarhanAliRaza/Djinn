@@ -50,6 +50,9 @@ run-dependencies:
 	test -f .env || touch .env
 	docker-compose -f docker-compose.dev.yml up --force-recreate db redis
 
+.PHONY: test
+test:
+	poetry run pytest -v -rs -n auto --show-capture=all
 
 .PHONY: update
 update: install migrate ;

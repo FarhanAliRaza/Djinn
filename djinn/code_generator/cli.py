@@ -3,7 +3,13 @@ from typing import List
 
 import typer
 from base import Generator
-from generators import AppGenerator, GenerateSerializer, GenerateUrl, GenerateView, ModelGenerator
+from generators import (
+    AppGenerator,
+    GenerateSerializer,
+    GenerateUrl,
+    GenerateView,
+    ModelGenerator,
+)
 from rich import print
 from typing_extensions import Annotated
 
@@ -22,7 +28,9 @@ def parse_model_label(label: str):
 
 
 @app.command()
-def generate(model: Annotated[str, typer.Argument(help="app_name.Model (Model label)")],):
+def generate(
+    model: Annotated[str, typer.Argument(help="app_name.Model (Model label)")],
+):
     app_name, model_name = parse_model_label(model)
     print(app_name, model_name)
     gen = Generator(app_name=app_name, model_name=model_name)
@@ -60,10 +68,14 @@ def create(
 
 
 @app.command()
-def startapp(app_name: Annotated[str, typer.Argument(help="App name. A valid django app name")],):
+def startapp(
+    app_name: Annotated[str, typer.Argument(help="App name. A valid django app name")],
+):
     ap = AppGenerator(app_name)
     if ap.check_if_foldername_exists():
-        print(f"[bold red]'{app_name}' conflicts with already present folder[/bold red]")
+        print(
+            f"[bold red]'{app_name}' conflicts with already present folder[/bold red]"
+        )
         return
     ap.copy_to_temp()
     ap.transform_and_move()

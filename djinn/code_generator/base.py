@@ -27,7 +27,6 @@ REALATION_FIELDS_CLASSES = (
 
 
 class Generator:
-
     def __init__(self, app_name, model_name):
         self.app_name: str = app_name
         self.model_name: str = model_name

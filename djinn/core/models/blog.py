@@ -9,4 +9,6 @@ class StatusChoice(models.TextChoices):
 class Blog(models.Model):
     title = models.CharField(max_length=255)
     body = models.TextField()
-    status = models.CharField(max_length=100, choices=StatusChoice.choices, default=StatusChoice.published)
+    status = models.CharField(
+        max_length=100, choices=StatusChoice.choices, default=StatusChoice.published
+    )

@@ -14,13 +14,13 @@ def remove_quotes(s: str):
 
 
 class ListTransformerRemove(cst.CSTTransformer):
-
     def __init__(self, gen, custom_fields) -> None:
         self.gen = gen
         self.custom_fields = custom_fields
 
-    def leave_Element(self, original_node: cst.Element,
-                      updated_node: cst.Element) -> BaseElement | FlattenSentinel[BaseElement] | RemovalSentinel:
+    def leave_Element(
+        self, original_node: cst.Element, updated_node: cst.Element
+    ) -> BaseElement | FlattenSentinel[BaseElement] | RemovalSentinel:
         s_value = remove_quotes(original_node.value.value)
         if s_value in self.gen.str_fields or s_value in self.custom_fields:
             # "fields still in model do not change"
@@ -91,7 +91,9 @@ class ClassTransformer(cst.CSTTransformer):
             # print(self.custom_fields, "custom fields")
             # print(value, "this is the value")
             # this will remove any field which is not in custom field or does not exist in the model
-            list_transofrmer = ListTransformerRemove(gen=self.gen, custom_fields=self.custom_fields)
+            list_transofrmer = ListTransformerRemove(
+                gen=self.gen, custom_fields=self.custom_fields
+            )
             modified_list_node: cst.List = value.visit(list_transofrmer)
             self.add_fields(modified_list_node, fields)
             return original_node.with_changes(value=modified_list_node)
@@ -112,13 +114,13 @@ class ClassTransformer(cst.CSTTransformer):
 
 
 class SerializerTransformer(cst.CSTTransformer):
-
     def __init__(self, gen) -> None:
         self.gen: Generator = gen
         self.serializer_class = f"{self.gen.model_name}Serializer"
 
-    def leave_ClassDef(self, original_node: cst.ClassDef,
-                       updated_node: cst.ClassDef) -> BaseStatement | FlattenSentinel[BaseStatement] | RemovalSentinel:
+    def leave_ClassDef(
+        self, original_node: cst.ClassDef, updated_node: cst.ClassDef
+    ) -> BaseStatement | FlattenSentinel[BaseStatement] | RemovalSentinel:
         if original_node.name.value == self.serializer_class:
             c = ClassTransformer(self.gen)
             modified_class = updated_node.visit(c)

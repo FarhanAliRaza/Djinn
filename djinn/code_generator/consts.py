@@ -8,7 +8,9 @@ SOURCE = _BASEDIR / "source"
 GENERATED = _BASEDIR / "generated"
 BASEDIR = settings.BASE_DIR
 PARENT_PACKAGE = "djinn"  # should be package name from cookiecutter
-INSTALLED_APPS_SETTINGS_PATH = (BASEDIR / f"{PARENT_PACKAGE}" / "project" / "settings" / "base.py")
+INSTALLED_APPS_SETTINGS_PATH = (
+    BASEDIR / f"{PARENT_PACKAGE}" / "project" / "settings" / "base.py"
+)
 
 
 class GenType(Enum):

@@ -1,7 +1,5 @@
 from datetime import timedelta
 
-from .. import settings
-
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(hours=1),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
@@ -9,7 +7,7 @@ SIMPLE_JWT = {
     "BLACKLIST_AFTER_ROTATION": False,
     "UPDATE_LAST_LOGIN": False,
     "ALGORITHM": "HS256",
-    "SIGNING_KEY": settings.SECRET_KEY,
+    "SIGNING_KEY": SECRET_KEY,  # noqa: F403, F821
     "VERIFYING_KEY": "",
     "AUDIENCE": None,
     "ISSUER": None,

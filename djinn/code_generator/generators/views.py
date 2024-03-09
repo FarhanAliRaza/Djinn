@@ -13,18 +13,18 @@ if TYPE_CHECKING:
 
 
 class QuerySetTransformer(cst.CSTTransformer):
-
     def __init__(self, model_name):
         self.model_name = model_name
 
-    def leave_Name(self, original_node: cst.Name, updated_node: cst.Name) -> cst.BaseExpression:
+    def leave_Name(
+        self, original_node: cst.Name, updated_node: cst.Name
+    ) -> cst.BaseExpression:
         if get_full_name_for_node(original_node) == "Model":
             return updated_node.with_changes(value=self.model_name)
         return super().leave_Name(original_node, updated_node)
 
 
 class RewriteClassAttr(cst.CSTTransformer):
-
     def __init__(self, gen):
         self.gen: Generator = gen
 
@@ -34,7 +34,9 @@ class RewriteClassAttr(cst.CSTTransformer):
         name = get_assign_name(original_node)
 
         if name == "serializer_class":
-            return updated_node.with_changes(value=cst.Name(value=f"{self.gen.model_name}Serializer"))
+            return updated_node.with_changes(
+                value=cst.Name(value=f"{self.gen.model_name}Serializer")
+            )
 
         return super().leave_Assign(original_node, updated_node)
 
@@ -49,7 +51,6 @@ class RewriteClassAttr(cst.CSTTransformer):
 
 
 class ViewTransformer(cst.CSTTransformer):
-
     def __init__(self, gen) -> None:
         self.gen: Generator = gen
         self.serializer_name = f"{self.gen.model_name}Serializer"
@@ -66,7 +67,9 @@ class ViewTransformer(cst.CSTTransformer):
         if get_full_name_for_node(original_node) == "ModelViewClass":
             rca = RewriteClassAttr(self.gen)
             updated_node = original_node.visit(rca)
-            return updated_node.with_changes(name=cst.Name(value=f"{self.gen.model_name}ViewSet"))
+            return updated_node.with_changes(
+                name=cst.Name(value=f"{self.gen.model_name}ViewSet")
+            )
 
     def leave_ImportFrom(
         self, original_node: cst.ImportFrom, updated_node: cst.ImportFrom
@@ -91,7 +94,6 @@ class ViewTransformer(cst.CSTTransformer):
 
 
 class GenerateView:
-
     def __init__(self, gen) -> None:
         self.gen: Generator = gen
         with open(SOURCE / "views.py") as f:
@@ -110,7 +112,6 @@ class GenerateView:
         vt = ViewTransformer(self.gen)
         modified_tree = self.tree.visit(vt)
         # pprintast(new_tree)
-        new_file_path = GENERATED / "views.py"
         with open(GENERATED / "views.py", "w") as f:
             f.write(modified_tree.code)
         if not os.path.exists(self.get_old_file_path()):

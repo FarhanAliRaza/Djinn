@@ -20,3 +20,9 @@
 - [ ] Resolve error (if file exists but the code class does not exist it does not generate new code)
 <!-- mkdir -p local
 cp djinn/project/settings/templates/settings.dev.py ./local/settings.dev.py -->
+
+<!-- cp djinn/project/settings/templates/settings.unittests.py ./local/settings.unittests.py  -->
+
+sudo apt-get clean && sudo apt-get update
+sudo apt-get install locales
+locale-gen en_US.UTF-8
