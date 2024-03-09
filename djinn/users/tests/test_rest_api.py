@@ -1,5 +1,9 @@
+import logging
+
 import pytest
 from rest_framework.test import APIClient
+
+log = logging.getLogger()
 
 
 @pytest.mark.django_db
@@ -9,8 +13,9 @@ def test_login(api_client, bucky):
     data = {"email": bucky.email, "password": "pass1234"}
     response = APIClient().post(url, data, format="json")
     assert response.status_code == 200
+    log.debug(response.data)
 
-    expected_keys = ["authentication", "user"]
+    expected_keys = ["refresh", "access"]
     assert all(key in response.data for key in expected_keys)
 
     expected_authentication_keys = ["access_token", "refresh_token"]
