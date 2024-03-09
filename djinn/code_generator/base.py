@@ -18,7 +18,7 @@ read_only_models = [
     "Site",
     "LogEntry",
 ]
-
+print("Zxd")
 REALATION_FIELDS_CLASSES = (
     models.ForeignKey,
     models.ManyToManyField,
