@@ -9,12 +9,17 @@
 - [x] Serializer generation
 - [x] View generation
 - [x] Url generation
+- [x] Model generation
+- [x] App generation
 - [x] Add CLI for code generation
 - [x] Add CLI for model generation
 - [x] Add CLI for app generation
+- [x] Google Oauth
+- [x] Add docker support
+- [ ] Github Actions
+- [ ] Openapi for client generation
 - [ ] Setup guide???
-- [ ] Add Environment variable support
-- [ ] Add docker support
+- [ ] Add Environment variable file support
 - [ ] Add Docs for setting up and using the project
 - [ ] Add Cookie cutter
 - [ ] Resolve error (if file exists but the code class does not exist it does not generate new code)
