@@ -3,6 +3,7 @@ from rest_framework.parsers import FormParser, JSONParser, MultiPartParser
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 
+from djinn.common.authentication import get_user_auth_data
 from djinn.common.permissions import IsSelfOrReadOnly
 
 from ..models import User
@@ -11,7 +12,6 @@ from ..serializers.user import (
     UserUpdateSerializer,
     UserWriteSerializer,
 )
-from .login import get_user_auth_data
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -53,5 +53,4 @@ class UserViewSet(viewsets.ModelViewSet):
         serializer.is_valid(raise_exception=True)
         self.perform_update(serializer)
         read_serializer = UserReadSerializer(instance, context={"request": request})
-
         return Response(read_serializer.data)

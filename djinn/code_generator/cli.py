@@ -68,6 +68,7 @@ def create(
     mg.add_to_admin()
 
 
+# TODO:add to global urls
 @app.command()
 def startapp(
     app_name: Annotated[str, typer.Argument(help="App name. A valid django app name")],

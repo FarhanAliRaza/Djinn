@@ -2,17 +2,9 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from djinn.users.serializers.token import TokenSerializer
+from djinn.common.authentication import get_user_auth_data
 
 from ..serializers.login import LoginSerializer
-from ..serializers.user import UserReadSerializer
-
-
-def get_user_auth_data(user, request):
-    return {
-        "authentication": TokenSerializer(user).data,
-        "user": UserReadSerializer(user, context={"request": request}).data,
-    }
 
 
 class LoginView(APIView):

@@ -108,7 +108,9 @@ class InitTransformer(cst.CSTTransformer):
         self, original_node: cst.Module, updated_node: cst.Module
     ) -> cst.Module:
         old_body: List[cst.SimpleStatementLine] = list(updated_node.body)
-        statement = cst.parse_statement(f"from .{self.model_name.lower()} import *")
+        statement = cst.parse_statement(
+            f"from .{self.model_name.lower()} import * # noqa: F403"
+        )
 
         old_body.append(statement)
         return updated_node.with_changes(body=tuple(old_body))
