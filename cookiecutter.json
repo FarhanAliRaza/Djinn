@@ -6,5 +6,9 @@
 
   "use_github_actions": true,
   "author": "Farhan Ali Raza <farhanalirazaazeemi@gmail.com>",
-  "_copy_without_render": ["{{cookiecutter.repo_name}}/.github/*.html"]
+  "__prompts__": {
+    "project_name": "Project name for your package etc",
+    "repo_name": "Parent folder in which your project files will be created",
+    "package_name": "Folder that will have your django project files and will be the parent python package"
+  }
 }
