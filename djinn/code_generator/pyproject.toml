@@ -1,0 +1,9 @@
+[project]
+name = "Djinn"
+description = "CLI for creating models, serializers, viewsets for your django rest framework projects"
+authors = [{ name = "Farhan Ali Raza", email = "farhanalirazaazeemi@gmail.com" }]
+keywords = [
+  "django rest framework",
+  "drf cli for creating models",
+  "drf cli for creating serializers",
+]

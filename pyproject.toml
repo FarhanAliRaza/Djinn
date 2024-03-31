@@ -37,7 +37,7 @@ line_length = 119
 multi_line_output = 5
 
 [tool.ruff]
-extend-exclude = [".env", "djinn/code_generator/source/*.py"]
+extend-exclude = [".env", "djinn/code_generator/src/source/*.py"]
 lint.extend-select = ["I"]
 
 [tool.yapf]

@@ -4,7 +4,6 @@ from ..models import Model
 
 
 class ModelSerializer(serializers.ModelSerializer):  # Do not change name
-
     class Meta:
         model = Model
         fields = []
