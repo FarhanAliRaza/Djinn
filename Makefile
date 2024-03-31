@@ -57,3 +57,9 @@ test:
 .PHONY: update
 update: install migrate ;
 	
+
+.PHONY: git-noverify
+git-noverify:
+	git add .
+	git commit --no-verify -m "cookiecutter"
+	git push 
