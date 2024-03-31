@@ -6,19 +6,19 @@ install:
 
 .PHONY: run
 run:
-	poetry run python -m {{cookiecutter.module_name}}.manage runserver
+	poetry run python -m {{cookiecutter.project_slug}}.manage runserver
 
 .PHONY: migrations
 migrations:
-	poetry run python -m {{cookiecutter.module_name}}.manage makemigrations
+	poetry run python -m {{cookiecutter.project_slug}}.manage makemigrations
 
 .PHONY: migrate
 migrate:
-	poetry run python -m {{cookiecutter.module_name}}.manage migrate
+	poetry run python -m {{cookiecutter.project_slug}}.manage migrate
 
 .PHONY: superuser
 superuser:
-	poetry run python -m {{cookiecutter.module_name}}.manage createsuperuser
+	poetry run python -m {{cookiecutter.project_slug}}.manage createsuperuser
 
 .PHONY: install-pre-commit
 install-pre-commit:
@@ -31,7 +31,7 @@ lint:
 
 .PHONY: generate
 generate:
-	python {{cookiecutter.module_name}}/code_generator/cli.py generate 
+	python {{cookiecutter.project_slug}}/code_generator/cli.py generate 
 
 .PHONY: check
 check:

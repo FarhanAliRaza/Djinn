@@ -38,4 +38,4 @@ jobs:
           END
       - name: Run deploy
         run: |
-          ssh target "cd {{cookiecutter.module_name}}/ && docker-compose down && git pull && docker-compose build && docker-compose up -d --force-recreate"
+          ssh target "cd {{cookiecutter.project_slug}}/ && docker-compose down && git pull && docker-compose build && docker-compose up -d --force-recreate"
