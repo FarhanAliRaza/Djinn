@@ -31,11 +31,11 @@ services:
       - db
       - redis
     environment:
-      {{cookiecutter.env_prefix}}_SETTING_DATABASES: '{"default":{"HOST":"db"}}'
-      {{cookiecutter.env_prefix}}_SETTING_LOCAL_SETTINGS_PATH: local/settings.prod.py
-      {{cookiecutter.env_prefix}}_SETTING_CHANNEL_LAYERS: '{"default":{"CONFIG":{"hosts":[["redis", 6379]]}}}'
-      {{cookiecutter.env_prefix}}_SETTING_CELERY_RESULT_BACKEND: redis://redis:6379/0
-      {{cookiecutter.env_prefix}}_SETTING_CELERY_BROKER_URL: redis://redis:6379/0
+      {{cookiecutter.__env_prefix}}_SETTING_DATABASES: '{"default":{"HOST":"db"}}'
+      {{cookiecutter.__env_prefix}}_SETTING_LOCAL_SETTINGS_PATH: local/settings.prod.py
+      {{cookiecutter.__env_prefix}}_SETTING_CHANNEL_LAYERS: '{"default":{"CONFIG":{"hosts":[["redis", 6379]]}}}'
+      {{cookiecutter.__env_prefix}}_SETTING_CELERY_RESULT_BACKEND: redis://redis:6379/0
+      {{cookiecutter.__env_prefix}}_SETTING_CELERY_BROKER_URL: redis://redis:6379/0
 
   celery:
     build: .
@@ -45,11 +45,11 @@ services:
       - db
       - redis
     environment:
-      {{cookiecutter.env_prefix}}_SETTING_DATABASES: '{"default":{"HOST":"db"}}'
-      {{cookiecutter.env_prefix}}_SETTING_LOCAL_SETTINGS_PATH: local/settings.prod.py
-      {{cookiecutter.env_prefix}}_SETTING_CHANNEL_LAYERS: '{"default":{"CONFIG":{"hosts":[["redis", 6379]]}}}'
-      {{cookiecutter.env_prefix}}_SETTING_CELERY_RESULT_BACKEND: redis://redis:6379/0
-      {{cookiecutter.env_prefix}}_SETTING_CELERY_BROKER_URL: redis://redis:6379/0
+      {{cookiecutter.__env_prefix}}_SETTING_DATABASES: '{"default":{"HOST":"db"}}'
+      {{cookiecutter.__env_prefix}}_SETTING_LOCAL_SETTINGS_PATH: local/settings.prod.py
+      {{cookiecutter.__env_prefix}}_SETTING_CHANNEL_LAYERS: '{"default":{"CONFIG":{"hosts":[["redis", 6379]]}}}'
+      {{cookiecutter.__env_prefix}}_SETTING_CELERY_RESULT_BACKEND: redis://redis:6379/0
+      {{cookiecutter.__env_prefix}}_SETTING_CELERY_BROKER_URL: redis://redis:6379/0
 
 volumes:
   postgresql-data:

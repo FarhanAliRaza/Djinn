@@ -1,7 +1,7 @@
 {
   "project_name": "Djinn",
   "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '_') }}",
-  "__env_prefix": "{{ cookiecutter.project_slug|upper }}",
+  "____env_prefix": "{{ cookiecutter.project_slug|upper }}",
   "use_github_actions": true,
   "author": "Farhan Ali Raza <farhanalirazaazeemi@gmail.com>"
 }

@@ -5,7 +5,7 @@ from {{cookiecutter.project_slug}}.common.utils.pytest import is_pytest_running
 from split_settings.tools import include, optional
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent.parent
-ENVVAR_SETTINGS_PREFIX = "{{cookiecutter.env_prefix}}_SETTING_"
+ENVVAR_SETTINGS_PREFIX = "{{cookiecutter.__env_prefix}}_SETTING_"
 LOCAL_SETTINGS_PATH = os.getenv(f"{ENVVAR_SETTINGS_PREFIX}LOCAL_SETTINGS_PATH")
 
 if not LOCAL_SETTINGS_PATH:
