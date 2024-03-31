@@ -18,7 +18,7 @@ COPY ["poetry.lock", "pyproject.toml", "./"]
 RUN poetry install --no-root
 
 COPY ["README.md", "Makefile", "./"]
-COPY {{cookiecutter.project_slug}} {{cookiecutter.project_slug}}
+COPY {{cookiecutter.package_name}} {{cookiecutter.package_name}}
 COPY local local
 
 EXPOSE 8000

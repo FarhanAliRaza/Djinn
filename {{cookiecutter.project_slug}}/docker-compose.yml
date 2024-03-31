@@ -40,7 +40,7 @@ services:
   celery:
     build: .
     restart: unless-stopped
-    entrypoint: ["poetry", "run", "celery", "-A", "{{cookiecutter.project_slug}}.project", "worker", "-l", "INFO"]
+    entrypoint: ["poetry", "run", "celery", "-A", "{{cookiecutter.package_name}}.project", "worker", "-l", "INFO"]
     depends_on:
       - db
       - redis

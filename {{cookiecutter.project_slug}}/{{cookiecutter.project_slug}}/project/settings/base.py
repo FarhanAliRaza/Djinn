@@ -19,9 +19,9 @@ INSTALLED_APPS = [
     # third party
     "corsheaders",
     # mine
-    "{{cookiecutter.project_slug}}.core",
-    "{{cookiecutter.project_slug}}.users",
-    "{{cookiecutter.project_slug}}.authentication",
+    "{{cookiecutter.package_name}}.core",
+    "{{cookiecutter.package_name}}.users",
+    "{{cookiecutter.package_name}}.authentication",
 ]
 
 MIDDLEWARE = [
@@ -35,7 +35,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = "{{cookiecutter.project_slug}}.project.urls"
+ROOT_URLCONF = "{{cookiecutter.package_name}}.project.urls"
 
 TEMPLATES = [
     {
@@ -53,7 +53,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "{{cookiecutter.project_slug}}.project.wsgi.application"
+WSGI_APPLICATION = "{{cookiecutter.package_name}}.project.wsgi.application"
 AUTH_USER_MODEL = "users.User"
 
 # Database
@@ -61,9 +61,9 @@ AUTH_USER_MODEL = "users.User"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "{{cookiecutter.project_slug}}",
-        "USER": "{{cookiecutter.project_slug}}",
-        "PASSWORD": "{{cookiecutter.project_slug}}",
+        "NAME": "{{cookiecutter.package_name}}",
+        "USER": "{{cookiecutter.package_name}}",
+        "PASSWORD": "{{cookiecutter.package_name}}",
         "HOST": "localhost",
         "PORT": "5432",
         "ATOMIC_REQUESTS": True,

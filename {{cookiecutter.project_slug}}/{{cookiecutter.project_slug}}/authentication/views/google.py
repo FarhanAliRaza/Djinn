@@ -1,6 +1,6 @@
 import logging
 
-from {{cookiecutter.project_slug}}.common.authentication import get_user_auth_data
+from {{cookiecutter.package_name}}.common.authentication import get_user_auth_data
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView

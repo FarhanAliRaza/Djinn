@@ -22,7 +22,7 @@ LOGGING = {
             "django.request",
             "django.db.backends",
             "django.template",
-            "{{cookiecutter.project_slug}}",
+            "{{cookiecutter.package_name}}",
         )
     },
     "root": {

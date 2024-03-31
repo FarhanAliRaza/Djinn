@@ -7,8 +7,8 @@ API_PREFIX = "api/"
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path(API_PREFIX, include("{{cookiecutter.project_slug}}.users.urls")),
-    path(API_PREFIX, include("{{cookiecutter.project_slug}}.authentication.urls")),
+    path(API_PREFIX, include("{{cookiecutter.package_name}}.users.urls")),
+    path(API_PREFIX, include("{{cookiecutter.package_name}}.authentication.urls")),
 ]
 
 if settings.DEBUG:

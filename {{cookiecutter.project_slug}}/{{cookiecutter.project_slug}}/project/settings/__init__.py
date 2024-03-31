@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 
-from {{cookiecutter.project_slug}}.common.utils.pytest import is_pytest_running
+from {{cookiecutter.package_name}}.common.utils.pytest import is_pytest_running
 from split_settings.tools import include, optional
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent.parent

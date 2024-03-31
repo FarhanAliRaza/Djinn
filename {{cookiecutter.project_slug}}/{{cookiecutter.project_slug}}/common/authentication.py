@@ -1,5 +1,5 @@
-from {{cookiecutter.project_slug}}.authentication.serializers.token import TokenSerializer
-from {{cookiecutter.project_slug}}.users.serializers.user import UserReadSerializer
+from {{cookiecutter.package_name}}.authentication.serializers.token import TokenSerializer
+from {{cookiecutter.package_name}}.users.serializers.user import UserReadSerializer
 
 
 def get_user_auth_data(user, request):

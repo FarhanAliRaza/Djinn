@@ -2,7 +2,7 @@ import re
 import sys
 
 MODULE_REGEX = r"^[_a-zA-Z][_a-zA-Z0-9]+$"
-module_name = "{{ cookiecutter.project_slug }}"
+module_name = "{{ cookiecutter.package_name }}"
 
 
 if __name__ == "__main__":

@@ -1,5 +1,5 @@
 import pytest
-from {{cookiecutter.project_slug}}.users.models import User
+from {{cookiecutter.package_name}}.users.models import User
 
 
 @pytest.fixture

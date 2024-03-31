@@ -48,10 +48,10 @@ column_limit = 119
 dedent_closing_brackets = true
 
 [tool.pytest.ini_options]
-DJANGO_SETTINGS_MODULE = "{{cookiecutter.project_slug}}.project.settings"
+DJANGO_SETTINGS_MODULE = "{{cookiecutter.package_name}}.project.settings"
 django_find_project = false
 python_files = "test_*.py"
-testpaths = ["{{cookiecutter.project_slug}}"]
+testpaths = ["{{cookiecutter.package_name}}"]
 filterwarnings = "ignore::DeprecationWarning:^(?!node\\.).*:"
 
 [build-system]

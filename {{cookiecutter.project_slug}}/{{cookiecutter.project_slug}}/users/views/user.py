@@ -1,5 +1,5 @@
-from {{cookiecutter.project_slug}}.common.authentication import get_user_auth_data
-from {{cookiecutter.project_slug}}.common.permissions import IsSelfOrReadOnly
+from {{cookiecutter.package_name}}.common.authentication import get_user_auth_data
+from {{cookiecutter.package_name}}.common.permissions import IsSelfOrReadOnly
 from rest_framework import status, viewsets
 from rest_framework.parsers import FormParser, JSONParser, MultiPartParser
 from rest_framework.permissions import AllowAny, IsAuthenticated
