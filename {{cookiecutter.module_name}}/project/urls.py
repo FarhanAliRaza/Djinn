@@ -7,8 +7,8 @@ API_PREFIX = "api/"
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path(API_PREFIX, include("djinn.users.urls")),
-    path(API_PREFIX, include("djinn.authentication.urls")),
+    path(API_PREFIX, include("{{cookiecutter.module_name}}.users.urls")),
+    path(API_PREFIX, include("{{cookiecutter.module_name}}.authentication.urls")),
 ]
 
 if settings.DEBUG:

@@ -1,4 +1,4 @@
-from djinn.common.authentication import get_user_auth_data
+from {{cookiecutter.module_name}}.common.authentication import get_user_auth_data
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView

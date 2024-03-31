@@ -6,7 +6,7 @@ import django
 from django.apps import apps
 from django.db import models
 
-os.environ["DJANGO_SETTINGS_MODULE"] = "djinn.project.settings"
+os.environ["DJANGO_SETTINGS_MODULE"] = "{{cookiecutter.module_name}}.project.settings"
 django.setup()
 
 read_only_models = [

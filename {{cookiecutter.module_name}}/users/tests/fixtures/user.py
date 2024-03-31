@@ -1,5 +1,5 @@
 import pytest
-from djinn.users.models import User
+from {{cookiecutter.module_name}}.users.models import User
 
 
 @pytest.fixture

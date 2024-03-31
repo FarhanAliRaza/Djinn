@@ -19,9 +19,9 @@ INSTALLED_APPS = [
     # third party
     "corsheaders",
     # mine
-    "djinn.core",
-    "djinn.users",
-    "djinn.authentication",
+    "{{cookiecutter.module_name}}.core",
+    "{{cookiecutter.module_name}}.users",
+    "{{cookiecutter.module_name}}.authentication",
 ]
 
 MIDDLEWARE = [
@@ -35,7 +35,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = "djinn.project.urls"
+ROOT_URLCONF = "{{cookiecutter.module_name}}.project.urls"
 
 TEMPLATES = [
     {
@@ -53,7 +53,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "djinn.project.wsgi.application"
+WSGI_APPLICATION = "{{cookiecutter.module_name}}.project.wsgi.application"
 AUTH_USER_MODEL = "users.User"
 
 # Database
@@ -61,9 +61,9 @@ AUTH_USER_MODEL = "users.User"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "djinn",
-        "USER": "djinn",
-        "PASSWORD": "djinn",
+        "NAME": "{{cookiecutter.module_name}}",
+        "USER": "{{cookiecutter.module_name}}",
+        "PASSWORD": "{{cookiecutter.module_name}}",
         "HOST": "localhost",
         "PORT": "5432",
         "ATOMIC_REQUESTS": True,
