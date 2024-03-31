@@ -1,9 +1,8 @@
 import os
 from pathlib import Path
 
-from split_settings.tools import include, optional
-
 from djinn.common.utils.pytest import is_pytest_running
+from split_settings.tools import include, optional
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent.parent
 ENVVAR_SETTINGS_PREFIX = "DJINN_SETTING_"

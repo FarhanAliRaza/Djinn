@@ -1,10 +1,9 @@
 import logging
 
+from djinn.common.authentication import get_user_auth_data
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
-from djinn.common.authentication import get_user_auth_data
 
 from ..oauth.google import redirect_user_to_google_oauth, validate_code_and_get_user
 

@@ -1,5 +1,4 @@
 import pytest
-
 from djinn.users.models import User
 
 
