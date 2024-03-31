@@ -1,1 +1,1 @@
-from .blog import *  # noqa
+from .blog import *  # noqa: F403

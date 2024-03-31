@@ -32,6 +32,9 @@ def parse_model_label(label: str):
 def generate(
     model: Annotated[str, typer.Argument(help="app_name.Model (Model label)")],
 ):
+    """
+    model:[app_name.ModelName] Label of the model for which you want to generate serializers and viewsets for.
+    """
     app_name, model_name = parse_model_label(model)
     print(app_name, model_name)
     gen = Generator(app_name=app_name, model_name=model_name)
@@ -50,8 +53,8 @@ def create(
     fields: Annotated[List[str], typer.Argument(help="field_name:field_type")],
 ):
     """
-    model:[app.Model] Model name must include the app name so model code is inserted into that apps model files
-    fields: [field:type] valid types are [str, text, choices]
+    [djinn create app_name.ModelName name:str is_done:bool, status:valid,invalid] Valid fields are ["str", "text", "int", "float", "bool"]
+    For choice the first value will be used as default.
     """
 
     app_name, model_name = parse_model_label(model)
@@ -73,6 +76,9 @@ def create(
 def startapp(
     app_name: Annotated[str, typer.Argument(help="App name. A valid django app name")],
 ):
+    """
+    app_name: Name of the django app you want to create
+    """
     ap = AppGenerator(app_name)
     if ap.check_if_foldername_exists():
         print(
@@ -86,17 +92,3 @@ def startapp(
 
 if __name__ == "__main__":
     app()
-"""
-How it should work?
-
-
-generate app.Model
-
-generate app.Model --serializer
-
-generate app.Model --v
-
-generate app.Model --u
-
-
-"""

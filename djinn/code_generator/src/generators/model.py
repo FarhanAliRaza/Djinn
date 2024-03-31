@@ -34,8 +34,8 @@ class ChoiceTransformer(cst.CSTTransformer):
         self, original_node: cst.IndentedBlock, updated_node: cst.IndentedBlock
     ) -> cst.BaseSuite:
         newbody = []
-        for field in self.choice_field["values"]:
-            fi = cst.parse_statement(f"{field} = '{field}'")
+        for idx, field in enumerate(self.choice_field["values"]):
+            fi = cst.parse_statement(f"{field} = {idx}")
             newbody.append(fi)
         return updated_node.with_changes(body=newbody)
 
@@ -51,13 +51,7 @@ class ModelTransormer(cst.CSTTransformer):
     ) -> cst.BaseSuite:
         newbody = []
         for field in self.fields:
-            if (
-                field["field_type"] == "str"
-                or field["field_type"] == "text"
-                or field["field_type"] == "int"
-                or field["field_type"] == "float"
-                or field["field_type"] == "bool"
-            ):
+            if field["field_type"] in ["str", "text", "int", "float", "bool"]:
                 name = field["name"]
                 dj_field = field["dj_field"]
                 fi = cst.parse_statement(f"{name} = {dj_field}")
