@@ -1,0 +1,5 @@
+{
+  "project_name": "Djinn",
+  "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '_') }}",
+  "author": "Farhan Ali Raza <farhanalirazaazeemi@gmail.com>"
+}

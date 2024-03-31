@@ -81,7 +81,6 @@ class GenerateSerializer:
         new_file_path = GENERATED / "serializers.py"
         with open(GENERATED / "serializers.py", "w") as f:
             f.write(astor.to_source(new_tree))
-        # TODO:For now just append to the path in future we will use libsct to diff what is changed
 
         if not os.path.exists(self.get_old_file_path()):
             with open(self.get_old_file_path(), "a+") as f:

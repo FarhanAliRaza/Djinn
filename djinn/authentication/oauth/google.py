@@ -11,13 +11,14 @@ from ..models import OauthProvider, ProviderChoice
 
 User = get_user_model()
 
-
 GOOGLE_OAUTH_SCOPE = [
     "https://www.googleapis.com/auth/userinfo.email",
     "https://www.googleapis.com/auth/userinfo.profile",
 ]
+
 GOOGLE_TOKEN_URL = "https://oauth2.googleapis.com/token"
 GOOGLE_USER_DATA_URL = "https://www.googleapis.com/oauth2/v1/userinfo"
+
 
 log = logging.getLogger(__name__)
 
