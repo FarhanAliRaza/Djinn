@@ -31,25 +31,25 @@ services:
       - db
       - redis
     environment:
-      DJINN_SETTING_DATABASES: '{"default":{"HOST":"db"}}'
-      DJINN_SETTING_LOCAL_SETTINGS_PATH: local/settings.prod.py
-      DJINN_SETTING_CHANNEL_LAYERS: '{"default":{"CONFIG":{"hosts":[["redis", 6379]]}}}'
-      DJINN_SETTING_CELERY_RESULT_BACKEND: redis://redis:6379/0
-      DJINN_SETTING_CELERY_BROKER_URL: redis://redis:6379/0
+      {{cookiecutter.env_prefix}}_SETTING_DATABASES: '{"default":{"HOST":"db"}}'
+      {{cookiecutter.env_prefix}}_SETTING_LOCAL_SETTINGS_PATH: local/settings.prod.py
+      {{cookiecutter.env_prefix}}_SETTING_CHANNEL_LAYERS: '{"default":{"CONFIG":{"hosts":[["redis", 6379]]}}}'
+      {{cookiecutter.env_prefix}}_SETTING_CELERY_RESULT_BACKEND: redis://redis:6379/0
+      {{cookiecutter.env_prefix}}_SETTING_CELERY_BROKER_URL: redis://redis:6379/0
 
   celery:
     build: .
     restart: unless-stopped
-    entrypoint: ["poetry", "run", "celery", "-A", "djinn.project", "worker", "-l", "INFO"]
+    entrypoint: ["poetry", "run", "celery", "-A", "{{cookiecutter.project_slug}}.project", "worker", "-l", "INFO"]
     depends_on:
       - db
       - redis
     environment:
-      DJINN_SETTING_DATABASES: '{"default":{"HOST":"db"}}'
-      DJINN_SETTING_LOCAL_SETTINGS_PATH: local/settings.prod.py
-      DJINN_SETTING_CHANNEL_LAYERS: '{"default":{"CONFIG":{"hosts":[["redis", 6379]]}}}'
-      DJINN_SETTING_CELERY_RESULT_BACKEND: redis://redis:6379/0
-      DJINN_SETTING_CELERY_BROKER_URL: redis://redis:6379/0
+      {{cookiecutter.env_prefix}}_SETTING_DATABASES: '{"default":{"HOST":"db"}}'
+      {{cookiecutter.env_prefix}}_SETTING_LOCAL_SETTINGS_PATH: local/settings.prod.py
+      {{cookiecutter.env_prefix}}_SETTING_CHANNEL_LAYERS: '{"default":{"CONFIG":{"hosts":[["redis", 6379]]}}}'
+      {{cookiecutter.env_prefix}}_SETTING_CELERY_RESULT_BACKEND: redis://redis:6379/0
+      {{cookiecutter.env_prefix}}_SETTING_CELERY_BROKER_URL: redis://redis:6379/0
 
 volumes:
   postgresql-data:

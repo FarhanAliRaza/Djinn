@@ -5,7 +5,7 @@ WORKDIR /opt/project
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 ENV PYTHONPATH .
-ENV DJINN_SETTING_IN_DOCKER true
+ENV {{cookiecutter.env_prefix}}_SETTING_IN_DOCKER true
 
 RUN set -xe \
     && apt-get update \
