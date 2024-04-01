@@ -192,10 +192,10 @@ It will also register the viewset in the `urls.py` file of core app.
 - [x] Add docker support
 - [x] Github Actions
 - [ ] Openapi for client generation
-- [ ] Setup guide???
+- [x] Setup guide
 - [ ] Add Environment variable file support
-- [ ] Add Docs for setting up and using the project
-- [ ] Add Cookie cutter
+- [x] Add Docs for setting up and using the project
+- [x] Add Cookie cutter
 - [ ] Resolve error (if file exists but the code class does not exist it does not generate new code)
 - [ ] Spin a separate package for code generator
 
