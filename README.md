@@ -19,17 +19,20 @@ cookiecutter https://github.com/FarhanAliRaza/djinn
 Configure your project
 
 ```
-  [1/6] Project name for your package etc (Djinn): backend
-  [2/6] Parent folder in which your project files will be created (backend): backend
-  [3/6] Folder that will have your django project files and will be the parent python package (reddit):
-  [4/6] Short descriptions of your package (): short description
-  [5/6] use_github_actions [y/n] (y): y
-  [6/6] author (Anonymous): Farhan
+  [1/6] Project name for your package etc (Djinn): my-backend
+  [2/6] Parent folder in which your project files will be created (my-backend):
+  [3/6] Folder that will have your django project files and will be the parent python package (my-backend): reddit
+  [4/6] Short descriptions of your package (): my next billion dollar idea api
+  [5/6] use_github_actions [y/n] (y):
+  [6/6] author (John Smith <john@example.com>):
 ```
 
+<https://python-poetry.org/docs/>[Install poetry]
+
 ```
-cd backend
+cd my-backend
 poetry install
+poetry shell
 ```
 
 If you some locales related error
