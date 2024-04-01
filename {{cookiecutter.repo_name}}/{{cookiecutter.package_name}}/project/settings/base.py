@@ -60,9 +60,9 @@ AUTH_USER_MODEL = "users.User"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "{{cookiecutter.package_name}}",
-        "USER": "{{cookiecutter.package_name}}",
-        "PASSWORD": "{{cookiecutter.package_name}}",
+        "NAME": "djinn",
+        "USER": "djinn",
+        "PASSWORD": "djinn",
         "HOST": "localhost",
         "PORT": "5432",
         "ATOMIC_REQUESTS": True,
