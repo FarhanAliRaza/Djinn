@@ -32,16 +32,21 @@ Configure your project
 ```
 cd my-backend
 poetry install
+```
+
+Activate environment
+
+```
 poetry shell
 ```
 
-If you some locales related error
+### Code Generation
 
 ```
-sudo apt-get clean && sudo apt-get update
-sudo apt-get install locales
-locale-gen en_US.UTF-8
+djinn --help
 ```
+
+![screenshot](images/image.png)
 
 ## Todos (WIP)
 
@@ -63,3 +68,11 @@ locale-gen en_US.UTF-8
 - [ ] Add Cookie cutter
 - [ ] Resolve error (if file exists but the code class does not exist it does not generate new code)
 - [ ] Spin a separate package for code generator
+
+If you some locales related error on wsl
+
+```
+sudo apt-get clean && sudo apt-get update
+sudo apt-get install locales
+locale-gen en_US.UTF-8
+```
