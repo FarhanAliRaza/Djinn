@@ -2,13 +2,15 @@
   "project_name": "Djinn",
   "repo_name": "{{ cookiecutter.project_name.lower().replace(' ', '-') }}",
   "package_name": "{{ cookiecutter.repo_name.lower().replace(' ', '_') }}",
+  "short_desc": "",
   "__env_prefix": "{{ cookiecutter.package_name|upper }}",
 
   "use_github_actions": true,
-  "author": "Farhan Ali Raza <farhanalirazaazeemi@gmail.com>",
+  "author": "Anonymous",
   "__prompts__": {
     "project_name": "Project name for your package etc",
     "repo_name": "Parent folder in which your project files will be created",
-    "package_name": "Folder that will have your django project files and will be the parent python package"
+    "package_name": "Folder that will have your django project files and will be the parent python package",
+    "short_desc": "Short descriptions of your package"
   }
 }

@@ -1,8 +1,8 @@
 [tool.poetry]
-name = "djinn"
+name = "{{cookiecutter.project_name}}"
 version = "0.1.0"
-description = "A starter template for django project with super powers"
-authors = ["farhan <Www.mfarvirus@gmail.com>"]
+description = "{{cookiecutter.short_desc}}"
+authors = ["{{cookiecutter.author}}"]
 license = "MIT"
 readme = "README.md"
 

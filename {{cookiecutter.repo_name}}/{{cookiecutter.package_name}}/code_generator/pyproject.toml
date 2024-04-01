@@ -1,9 +1,21 @@
 [project]
 name = "Djinn"
+version="0.7"
 description = "CLI for creating models, serializers, viewsets for your django rest framework projects"
-authors = [{ name = "Farhan Ali Raza", email = "farhanalirazaazeemi@gmail.com" }]
+authors = [{ name="Farhan Ali Raza", email="farhanalirazaazeemi@gmail.com" },]
 keywords = [
   "django rest framework",
   "drf cli for creating models",
   "drf cli for creating serializers",
 ]
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+[project.scripts]
+djinn = "cli:app"
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
