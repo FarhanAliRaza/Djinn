@@ -151,7 +151,6 @@ It will create a new `blog.py` file in the views and serializers folder. Blog ca
 ```
 ├── core
 │   │   ├── __init__.py
-
 │   │   ├── admin.py
 │   │   ├── apps.py
 │   │   ├── migrations
