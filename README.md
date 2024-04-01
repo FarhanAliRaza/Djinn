@@ -2,19 +2,19 @@
 
 ## Features
 
-[x] Code Generation DRF Viewset, Serializer, Model
-[x] Simple JWT
-[x] Google Oauth
-[x] Docker Development
-[x] Docker Deployment
-[x] Redis and Postgres Support docker
-[x] Ruff Code linting and formatting
-[x] pre-commit setup for catching issues before commiting
-[x] Pytest setup
-[x] Django filters
-[x] Github Actions
-[ ] Generate js client for frontend
-[ ] Other library support
+- [x] Code Generation DRF Viewset, Serializer, Model
+- [x] Simple JWT
+- [x] Google Oauth
+- [x] Docker Development
+- [x] Docker Deployment
+- [x] Redis and Postgres Support docker
+- [x] Ruff Code linting and formatting
+- [x] pre-commit setup for catching issues before commiting
+- [x] Pytest setup
+- [x] Django filters
+- [x] Github Actions
+- [ ] Generate js client for frontend
+- [ ] Other library support
 
 ## Project Setup
 
