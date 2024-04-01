@@ -27,7 +27,8 @@ Configure your project
   [6/6] author (John Smith <john@example.com>):
 ```
 
-<https://python-poetry.org/docs/>[Install poetry]
+Install poetry
+<https://python-poetry.org/docs/>
 
 ```
 cd my-backend
@@ -47,6 +48,27 @@ djinn --help
 ```
 
 ![screenshot](images/image.png)
+
+#### Create a new app
+
+```
+djinn startapp core
+```
+
+It will create a new app and register it in the settings
+
+```
+├── core
+│   ├── __init__.py
+│   ├── admin.py
+│   ├── apps.py
+│   ├── migrations
+│   │   └── __init__.py
+│   ├── models
+│   │   └── __init__.py
+│   ├── tests.py
+│   └── urls.py
+```
 
 ## Todos (WIP)
 

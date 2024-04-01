@@ -19,7 +19,6 @@ INSTALLED_APPS = [
     # third party
     "corsheaders",
     # mine
-    "{{cookiecutter.package_name}}.core",
     "{{cookiecutter.package_name}}.users",
     "{{cookiecutter.package_name}}.authentication",
 ]
