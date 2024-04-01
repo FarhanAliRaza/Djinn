@@ -13,7 +13,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent.parent
 sys.path.append(
     str(BASE_DIR)
 )  # gymnasitics that i have to do to bend python packaging to work
-os.environ["DJANGO_SETTINGS_MODULE"] = "verifier.project.settings"
+os.environ["DJANGO_SETTINGS_MODULE"] = "{{cookiecutter.package_name}}.project.settings"
 django.setup()
 
 

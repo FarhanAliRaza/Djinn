@@ -2,7 +2,7 @@
 name = "{{cookiecutter.project_name}}"
 version = "0.1.0"
 description = "{{cookiecutter.short_desc}}"
-authors = [{name:"{{cookiecutter.author}}", email:"test@test.com"}]
+authors = ["{{cookiecutter.author}}"]
 license = "MIT"
 readme = "README.md"
 
@@ -31,6 +31,7 @@ astor = "^0.8.1"
 typer = {extras = ["all"], version = "^0.9.0"}
 pre-commit = "^3.6.2"
 colorlog = "^6.8.2"
+djinn = {path = "{{cookiecutter.package_name}}/code_generator", develop = true}
 
 [tool.isort]
 line_length = 119
