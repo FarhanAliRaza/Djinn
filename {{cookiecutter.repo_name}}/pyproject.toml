@@ -23,6 +23,12 @@ model-bakery = "^1.17.0"
 django-cors-headers = "^4.3.1"
 requests = "^2.31.0"
 
+{% if cookiecutter.use_celery %}
+celery = "^5.4.0"
+django-celery-beat = "^2.6.0"
+django-celery-results = "^2.5.1"
+redis = "^5.0.4"
+{% endif %}
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.2.1"

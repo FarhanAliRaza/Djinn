@@ -5,6 +5,7 @@
   "short_desc": "",
   "__env_prefix": "{{ cookiecutter.package_name|upper }}",
   "use_github_actions": true,
+  "use_celery": true,
   "author": "John Smith <john@example.com>",
   "__prompts__": {
     "project_name": "Project name for your package etc",

@@ -23,6 +23,11 @@ include(
     "logging.py",
     "drf.py",
     optional(LOCAL_SETTINGS_PATH),
+    
+    
+    {% if cookiecutter.use_celery %}
+    "celery.py",
+    {% endif %}
     "jwt.py",  # because it requires SECRET_KEY
     "envvars.py",
     "docker.py",
