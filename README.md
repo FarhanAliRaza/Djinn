@@ -98,7 +98,7 @@ djinn --help
 #### Create a new app
 
 ```
-djinn startapp core
+poetry run djinn startapp core
 ```
 
 It will create a new app and register it in the settings
@@ -167,7 +167,7 @@ make migrate
 #### Create Serializers and Viewset for your model
 
 ```
-djinn generate core.Blog
+poetry run djinn generate core.Blog
 
 ```
 
