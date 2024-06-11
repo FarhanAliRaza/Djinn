@@ -66,7 +66,7 @@ poetry shell
 Run the docker compose file for development it will create the database and redis
 
 ```
-docker-compose -f docker-compose.dev.yml -d
+docker-compose -f docker-compose.dev.yml up
 ```
 
 Run Migrations
