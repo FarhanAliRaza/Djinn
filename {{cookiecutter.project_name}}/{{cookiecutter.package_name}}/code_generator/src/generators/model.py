@@ -2,11 +2,10 @@ import shutil
 import sys
 from pathlib import Path
 from typing import List
-
 import libcst as cst
-from consts import GENERATED, SOURCE
 from django.apps import apps
 from rich import print
+from consts import GENERATED, SOURCE
 
 field_map = {
     "str": "models.CharField(max_length=255)",
@@ -15,6 +14,9 @@ field_map = {
     "int": "models.IntegerField(default=0)",
     "float": "models.FloatField(default=0.0)",
     "bool": "models.BooleanField(default=False)",
+    "slug": "models.SlugField(max_length=10)",
+    "update": "models.DateTimeField(auto_now=True)",
+    "create": "models.DateTimeField(auto_now_add=True)",
 }
 
 
@@ -35,7 +37,7 @@ class ChoiceTransformer(cst.CSTTransformer):
     ) -> cst.BaseSuite:
         newbody = []
         for idx, field in enumerate(self.choice_field["values"]):
-            fi = cst.parse_statement(f"{field} = {idx}")
+            fi = cst.parse_statement(f"{field} = '{field}'")
             newbody.append(fi)
         return updated_node.with_changes(body=newbody)
 
@@ -51,7 +53,15 @@ class ModelTransormer(cst.CSTTransformer):
     ) -> cst.BaseSuite:
         newbody = []
         for field in self.fields:
-            if field["field_type"] in ["str", "text", "int", "float", "bool"]:
+            if field["field_type"] in [
+                "str",
+                "text",
+                "int",
+                "float",
+                "bool",
+                "update",
+                "create",
+            ]:
                 name = field["name"]
                 dj_field = field["dj_field"]
                 fi = cst.parse_statement(f"{name} = {dj_field}")
@@ -129,7 +139,7 @@ class ModelGenerator:
             dj_field = field_map.get(field_type)
             if not dj_field:
                 print(
-                    f"[bold red]No django field type found.'{field}' is not valid field. Valid name is[/bold red][bold green] name.type [/bold green] [bold red] valid types are {field_map.keys()} [/bold red]"
+                    f"[bold red]No django field type found.'{field}' is not valid field. Valid name is[/bold red][bold green] name:type [/bold green] [bold red] valid types are {list(field_map.keys())} [/bold red]"
                 )
                 sys.exit()
             return {

@@ -38,13 +38,12 @@ cookiecutter https://github.com/FarhanAliRaza/djinn
 Configure your project
 
 ```
-  [1/7] Project name for your package etc (Djinn): my-backend
-  [2/7] Parent folder in which your project files will be created (my-backend):
-  [3/7] Folder that will have your django project files and will be the parent python package (my-backend): reddit
-  [4/7] Short descriptions of your package (): my next billion dollar idea api
-  [5/7] use_github_actions [y/n] (y):
-  [6/7] use_celery [y/n] (y):
-  [7/7] author (John Smith <john@example.com>):
+[1/6] Directory name in which files will be created (backend_api):
+[2/6] Parent python package name for all reltive imports and also host all django apps. (backend_api):
+[3/6] Short descriptions of your package ():
+[4/6] use_github_actions [y/n] (y):
+[5/6] use_celery [y/n] (y):
+[6/6] author (Farhan Ali <farhanalirazaazeemi@gmail.com>):
 ```
 
 Install poetry

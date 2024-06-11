@@ -1,5 +1,5 @@
 {
-  "project_name": "Djinn",
+  "project_name": "backend_api",
   "package_name": "{{ cookiecutter.project_name.lower().replace(' ', '_') }}",
   "short_desc": "",
   "__env_prefix": "{{ cookiecutter.package_name|upper }}",
